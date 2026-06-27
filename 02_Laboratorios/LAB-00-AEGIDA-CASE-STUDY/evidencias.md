@@ -4,22 +4,22 @@ Selección de evidencias visuales del laboratorio AÉGIDA para el portfolio téc
 
 ## Evidencias publicadas
 
-- Topología lógica global.
-- Redes VMware y segmentos.
-- pfSense como núcleo de segmentación.
-- Active Directory y modelo Tier 0.
-- PAW como estación de administración segura.
-- GPOs y hardening básico.
-- Servicio Nginx en DMZ.
-- Validación DNS.
-- Wazuh con agentes activos.
-- Entorno OT integrado mediante TRANSIT-LAB.
-- Red de validación no confiable.
-- Reglas pfSense para administración.
-- FIM en activos OT.
-- Aislamiento OT validado.
-- Playbook básico SOC.
+- `diagramas/01-topologia-logica-global.png`
+- `diagramas/02-redes-vmware-segmentos.png`
+- `diagramas/03-pfsense-segmentacion.png`
+- `diagramas/04-active-directory-tier0.png`
+- `diagramas/05-paw-administracion-segura.png`
+- `diagramas/06-gpos-hardening.png`
+- `capturas/dmz/nginx-dmz01.png`
+- `capturas/ad/dns-validacion.png`
+- `capturas/wazuh/dashboard-agentes-activos.png`
+- `diagramas/07-ot-transit-lab.png`
+- `diagramas/08-red-kali.png`
+- `capturas/pfsense/reglas-mgmt.png`
+- `capturas/wazuh/fim-ot.png`
+- `capturas/kali/bloqueo-ot.png`
+- `diagramas/09-playbook-soc.png`
 
 ## Criterio de publicación
 
-Se publican solo capturas con valor técnico. La memoria completa original se mantiene fuera del repositorio público.
+Se publican capturas representativas, no la memoria completa original.
