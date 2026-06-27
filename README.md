@@ -15,6 +15,8 @@ El objetivo es demostrar capacidad práctica para diseñar, desplegar, validar y
 
 El nombre interno del entorno de prácticas se conserva únicamente en algunos nombres técnicos del laboratorio. De cara pública, este repositorio se presenta como un portfolio técnico profesional, claro y orientado a empleabilidad.
 
+**Nota sobre nomenclatura interna:** nombres como `orion.lab`, `ORN-*`, `ORION_AG01` o similares forman parte del esquema interno usado para ordenar máquinas, dominio, recursos y evidencias del laboratorio. No representan una marca pública ni una infraestructura real de producción.
+
 ---
 
 ## Lectura rápida para recruiters
