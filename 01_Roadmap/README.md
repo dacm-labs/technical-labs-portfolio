@@ -6,6 +6,8 @@ Este directorio recoge la planificación estratégica del **portfolio técnico**
 
 El objetivo no es acumular laboratorios sueltos, sino construir una progresión coherente y defendible en sistemas, infraestructura, SQL Server, alta disponibilidad, seguridad defensiva, monitorización, cloud, automatización, datos y administración de bases de datos.
 
+**Nota sobre nomenclatura interna:** nombres como `orion.lab`, `ORN-*`, `ORION_AG01` o similares se usan únicamente como convención técnica de laboratorio para ordenar máquinas, dominio, recursos y evidencias. No representan una marca pública ni una infraestructura real de producción.
+
 ---
 
 ## Criterio de priorización
@@ -113,4 +115,3 @@ docs/
 - Incluir evidencias cuando el laboratorio esté validado.
 - Reconocer limitaciones y mejoras futuras.
 - Mantener el roadmap alineado con el estado real del repositorio.
-
