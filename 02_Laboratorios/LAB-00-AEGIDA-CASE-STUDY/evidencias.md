@@ -29,3 +29,7 @@ Se publican capturas representativas, no la memoria completa original. La selecc
 ## Mejora futura
 
 Una mejora futura sería añadir una captura más clara de la validación funcional HMI/PLC obtenida directamente desde las máquinas virtuales.
+
+## Conclusión
+
+Las evidencias permiten explicar el laboratorio como una arquitectura defensiva segmentada con firewall, identidad, administración segura, monitorización y entorno OT simulado.
