@@ -13,6 +13,10 @@ LAB-01 resume un laboratorio práctico de administración de bases de datos, ope
 - Dashboard de salud.
 - Evidencias visuales para portfolio.
 
+## Uso en entrevistas
+
+Este laboratorio permite explicar una base técnica completa: preparación del entorno, recuperación, control de permisos, automatización y revisión del estado final.
+
 ## Conclusión
 
 Este laboratorio ayuda a explicar trabajo técnico realista y defendible en entrevistas.
