@@ -17,6 +17,10 @@ LAB-01 resume un laboratorio práctico de administración de bases de datos, ope
 
 Este laboratorio permite explicar una base técnica completa: preparación del entorno, recuperación, control de permisos, automatización y revisión del estado final.
 
+## Relación con el portfolio
+
+Sirve como base para la línea posterior de alta disponibilidad, hardening y monitorización.
+
 ## Conclusión
 
 Este laboratorio ayuda a explicar trabajo técnico realista y defendible en entrevistas.
