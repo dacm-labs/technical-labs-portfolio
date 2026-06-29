@@ -126,6 +126,7 @@ Detalle completo: [arquitectura.md](arquitectura.md).
 | [Plan de trabajo](plan-trabajo.md) | Bloques ejecutados y secuencia del laboratorio. |
 | [Hardening](hardening.md) | Baseline, hallazgos y correcciones aplicadas. |
 | [Auditoría](auditoria.md) | Auditoría de servidor, base de datos, audit GUID y eventos. |
+| [Mínimo privilegio](minimo-privilegio.md) | Pruebas reales con usuarios readonly, auditor y backup operator. |
 | [Validaciones](validaciones.md) | Pruebas técnicas y resultados finales. |
 | [Checklist](checklist.md) | Checklist de cumplimiento final. |
 | [Evidencias](evidencias.md) | Capturas y evidencias seleccionadas. |
