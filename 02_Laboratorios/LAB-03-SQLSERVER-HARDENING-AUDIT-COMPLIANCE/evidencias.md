@@ -102,3 +102,11 @@ Este documento recoge una selección de capturas representativas del LAB-03. Las
 ## Estado
 
 Evidencias seleccionadas, organizadas y listas para publicación en GitHub.
+
+## Diagramas publicados
+
+| Nº | Diagrama | Evidencia |
+|---:|---|---|
+| 01 | [portada-lab03-sqlserver-hardening](diagramas/01-lab03-sqlserver-hardening-cover.png) | Portada visual del LAB-03. |
+| 02 | [topologia-logica-global-lab03](diagramas/02-lab03-topologia-logica-global.png) | Topología lógica global del entorno LAB-03. |
+

@@ -108,3 +108,9 @@ El `audit_guid` se alineó entre `ORN-SQL01` y `ORN-SQL02` para mantener coheren
 ## Nota de publicación
 
 Los nombres `ORION`, `ORN-*` y `orion.lab` forman parte de la nomenclatura interna del laboratorio para ordenar máquinas, dominio, recursos y evidencias. No representan una infraestructura real de producción.
+## Topología lógica
+
+La siguiente imagen muestra la topología lógica final del LAB-03, incluyendo dominio, nodos SQL, Always On, hardening, auditoría, mínimo privilegio y validaciones de cumplimiento.
+
+![Topología lógica global - LAB-03](diagramas/02-lab03-topologia-logica-global.png)
+
