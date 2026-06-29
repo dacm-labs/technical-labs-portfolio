@@ -116,9 +116,12 @@ Detalle completo: [troubleshooting.md](troubleshooting.md).
 - Quorum mediante File Share Witness.
 - Dashboard final del clúster WSFC.
 - Availability Group sincronizado y saludable.
-- Listener `ORN-SQLAG01` online.
+- Listener `ORN-SQLAG01` online y validación AD/DNS.
+- Lectura en réplica secundaria con `ApplicationIntent=ReadOnly`.
 - Failover, escritura por listener y failback.
 - DNS y puertos finales validados.
+- Jobs AG-aware en ambos nodos.
+- Preferencia de backup en secundaria y backup de log generado desde `ORN-SQL02`.
 
 Relación de capturas: [evidencias.md](evidencias.md).
 
@@ -134,7 +137,7 @@ Relación de capturas: [evidencias.md](evidencias.md).
 | [Checklist](checklist.md) | Estado de validaciones y cierre. |
 | [Validaciones](validaciones.md) | Pruebas técnicas realizadas y resultado. |
 | [Troubleshooting](troubleshooting.md) | Incidencias encontradas y resolución. |
-| [Evidencias](evidencias.md) | Relación de capturas publicadas y candidatas futuras. |
+| [Evidencias](evidencias.md) | Relación de capturas publicadas y evidencias operativas. |
 | [Scripts](scripts/README.md) | Scripts públicos de validación final. |
 | [Competencias técnicas](valor-profesional.md) | Valor profesional del laboratorio. |
 | [Lecciones aprendidas](lecciones-aprendidas.md) | Conclusiones técnicas y aprendizajes. |
