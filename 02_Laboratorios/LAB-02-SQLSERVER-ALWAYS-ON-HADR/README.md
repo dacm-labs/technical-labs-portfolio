@@ -136,6 +136,7 @@ Relación de capturas: [evidencias.md](evidencias.md).
 | [Troubleshooting](troubleshooting.md) | Incidencias encontradas y resolución. |
 | [Evidencias](evidencias.md) | Relación de capturas publicadas y candidatas futuras. |
 | [Scripts](scripts/README.md) | Scripts públicos de validación final. |
+| [Competencias técnicas](valor-profesional.md) | Valor profesional del laboratorio. |
 | [Lecciones aprendidas](lecciones-aprendidas.md) | Conclusiones técnicas y aprendizajes. |
 
 ---
