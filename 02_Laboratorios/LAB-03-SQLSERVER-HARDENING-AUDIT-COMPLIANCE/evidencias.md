@@ -1,93 +1,104 @@
 # Evidencias — LAB-03 SQL Server Hardening, Audit & Compliance
-
 ## Objetivo
-
-Este documento relaciona las evidencias visuales y técnicas seleccionadas para documentar LAB-03.
-
-La memoria Word completa contiene el detalle paso a paso y capturas completas. En GitHub se publica una selección representativa, sin credenciales ni datos sensibles.
-
+Este documento recoge una selección de capturas representativas del LAB-03. Las evidencias se han extraído de la memoria completa del laboratorio y se publican organizadas por bloque técnico, evitando capturas con credenciales, secretos o datos sensibles.
 ---
-
 ## Criterio de publicación
-
 - No publicar contraseñas ni secretos.
-- No publicar correos completos ni credenciales de Database Mail sin censura.
-- No publicar la memoria Word completa como documento público.
-- Priorizar capturas que demuestren resultados finales y controles aplicados.
-- Evitar capturas repetitivas de pruebas intermedias.
-- Documentar hallazgos y correcciones sin exponer datos sensibles.
-
+- No publicar correos personales ni credenciales de Database Mail sin censura.
+- Priorizar capturas que demuestran estado final, validaciones reales y controles aplicados.
+- Mantener una selección representativa para que GitHub sea navegable y no una copia completa de la memoria.
 ---
-
-## Evidencias recomendadas
-
-| ID | Bloque | Evidencia | Valor técnico |
-|---|---|---|---|
-| PF-01 | Preflight | Validación DNS del laboratorio | Confirma resolución de nodos, clúster y listener. |
-| PF-02 | Preflight | Puertos críticos `1433`, `5022`, `3343` | Confirma conectividad SQL, HADR y WSFC. |
-| AG-01 | Preflight | Estado `ORION_AG01` healthy | Confirma estado sano antes del hardening. |
-| AG-02 | Preflight | `OrionLabDB` synchronized / healthy | Evidencia de base protegida sincronizada. |
-| JOB-01 | Preflight | Jobs AG-aware en SQL01 | Valida mantenimiento adaptado al rol. |
-| JOB-02 | Preflight | Jobs AG-aware en SQL02 | Valida coherencia en secundaria. |
-| SEC-01 | Baseline | SQL02 en Mixed Mode y `sa` habilitado | Hallazgo inicial de hardening. |
-| SEC-02 | Baseline | Logins y roles SQL01 | Inventario de seguridad inicial. |
-| SEC-03 | Baseline | Logins y roles SQL02 | Identificación de asimetrías. |
-| HRD-01 | Hardening | `sa` deshabilitado en SQL02 | Corrección de exposición SQL login. |
-| HRD-02 | Hardening | SQL02 Windows-only tras reinicio | Homogeneización de autenticación. |
-| HRD-03 | Hardening | Superficie de ataque a `0` | Reducción de opciones peligrosas. |
-| AUD-01 | Auditoría | `ORION_ServerAudit` activo en SQL01 | Auditoría de servidor operativa. |
-| AUD-02 | Auditoría | `ORION_ServerAudit` activo en SQL02 | Auditoría replicada en secundaria. |
-| AUD-03 | Auditoría | `audit_guid` alineado | Control crítico en Always On. |
-| AUD-04 | Auditoría | `ORION_OrionLabDB_AuditSpec` activa | Auditoría de base sobre `lab.Clientes`. |
-| AUD-05 | Auditoría | Eventos `SELECT/INSERT/UPDATE/DELETE` leídos | Trazabilidad sobre datos. |
-| AUD-06 | Auditoría | Evento `SELECT` en secundaria read-only | Auditoría funcional en SQL02. |
-| PRIV-01 | Mínimo privilegio | `usr_sql_readonly` lee y no modifica | Separación lectura/escritura. |
-| PRIV-02 | Mínimo privilegio | `usr_sql_audit` lee auditoría y no datos | Separación auditoría/datos. |
-| PRIV-03 | Mínimo privilegio | `usr_sql_backupop` hace backup y no lee datos | Separación backup/datos. |
-| FIN-01 | Cierre | Snapshot final SQL01 | Cumplimiento final del primario. |
-| FIN-02 | Cierre | Snapshot final SQL02 | Cumplimiento final del secundario. |
-
+## 01 — Preflight y baseline operativo
+### Validación DNS del dominio y recursos críticos.
+![Validación DNS del dominio y recursos críticos.](capturas/01-preflight-baseline/pf-01-dns.png)
+### Validación de puertos SQL Server, HADR y WSFC.
+![Validación de puertos SQL Server, HADR y WSFC.](capturas/01-preflight-baseline/pf-02-puertos-criticos.png)
+### Conexión al listener y propiedades principales.
+![Conexión al listener y propiedades principales.](capturas/01-preflight-baseline/pf-03-listener-properties.png)
+### Estado general del Availability Group.
+![Estado general del Availability Group.](capturas/01-preflight-baseline/ag-01-availability-group-health.png)
+### Base OrionLabDB sincronizada dentro del AG.
+![Base OrionLabDB sincronizada dentro del AG.](capturas/01-preflight-baseline/ag-02-orionlabdb-synchronized.png)
+### Jobs AG-aware en SQL01.
+![Jobs AG-aware en SQL01.](capturas/01-preflight-baseline/job-01-jobs-ag-aware-sql01.png)
+### Jobs AG-aware en SQL02.
+![Jobs AG-aware en SQL02.](capturas/01-preflight-baseline/job-02-jobs-ag-aware-sql02.png)
 ---
-
-## Estructura sugerida de capturas
-
-```text
-capturas/
-├── 01-preflight-baseline/
-├── 02-security-baseline/
-├── 03-surface-area/
-├── 04-logins-roles-permissions/
-├── 05-auditoria/
-└── 06-validacion-final/
-```
-
+## 02 — Baseline de seguridad
+### Hallazgo inicial: sa habilitado en SQL02.
+![Hallazgo inicial: sa habilitado en SQL02.](capturas/02-security-baseline/sec-01-sql02-sa-enabled-baseline.png)
+### Inventario de logins en SQL01.
+![Inventario de logins en SQL01.](capturas/02-security-baseline/sec-02-logins-sql01.png)
+### Inventario de logins en SQL02.
+![Inventario de logins en SQL02.](capturas/02-security-baseline/sec-03-logins-sql02.png)
 ---
-
-## Evidencias clave ya validadas en memoria
-
-| Bloque | Evidencia técnica |
-|---|---|
-| Bloque 0 | DNS, puertos, listener, Always On, jobs AG-aware. |
-| Bloque 1 | Baseline de logins, roles, permisos, endpoints, linked servers, credenciales, proxies y auditorías. |
-| Bloque 2 | Corrección de Mixed Mode, `sa`, grupos AD y superficie de ataque. |
-| Bloque 3 | Auditoría de servidor, audit GUID, auditoría de base y lectura de eventos. |
-| Bloque 4 | Pruebas reales de mínimo privilegio con usuarios de dominio. |
-| Bloque 5 | Checklist final de cumplimiento en SQL01 y SQL02. |
-
+## 03 — Hardening y superficie de ataque
+### sa deshabilitado en SQL02.
+![sa deshabilitado en SQL02.](capturas/03-surface-area/hrd-01-sa-disabled-sql02.png)
+### Validación post-hardening en SQL02.
+![Validación post-hardening en SQL02.](capturas/03-surface-area/hrd-02-sql02-post-hardening.png)
+### Superficie de ataque reducida en SQL01.
+![Superficie de ataque reducida en SQL01.](capturas/03-surface-area/hrd-03-surface-area-sql01.png)
 ---
-
-## Capturas sensibles
-
-La evidencia de credenciales SQL / Database Mail puede contener correo técnico. Antes de publicar capturas de ese apartado, debe aplicarse censura visual sobre:
-
-- Correos electrónicos.
-- Identidades de credenciales.
-- Cualquier ruta, token, secreto o dato no necesario para la explicación pública.
-
+## 04 — Mínimo privilegio y roles
+### Validación de mínimo privilegio: usuario readonly.
+![Validación de mínimo privilegio: usuario readonly.](capturas/04-logins-roles-permissions/priv-01-readonly-user-validation.png)
+### Validación de mínimo privilegio: usuario auditor.
+![Validación de mínimo privilegio: usuario auditor.](capturas/04-logins-roles-permissions/priv-02-audit-user-validation.png)
+### Validación de mínimo privilegio: backup operator.
+![Validación de mínimo privilegio: backup operator.](capturas/04-logins-roles-permissions/priv-03-backup-operator-validation.png)
+### Fichero de backup generado por backup operator.
+![Fichero de backup generado por backup operator.](capturas/04-logins-roles-permissions/priv-04-backup-file-generated.png)
 ---
+## 05 — Auditoría y trazabilidad
+### Auditoría de servidor activa en SQL01.
+![Auditoría de servidor activa en SQL01.](capturas/05-auditoria/aud-01-server-audit-sql01.png)
+### Auditoría de servidor activa en SQL02.
+![Auditoría de servidor activa en SQL02.](capturas/05-auditoria/aud-02-server-audit-sql02.png)
+### Audit GUID alineado entre réplicas.
+![Audit GUID alineado entre réplicas.](capturas/05-auditoria/aud-03-audit-guid-aligned.png)
+### Database Audit Specification sobre lab.Clientes.
+![Database Audit Specification sobre lab.Clientes.](capturas/05-auditoria/aud-04-database-audit-spec.png)
+### Eventos auditados sobre lab.Clientes en SQL01.
+![Eventos auditados sobre lab.Clientes en SQL01.](capturas/05-auditoria/aud-05-events-lab-clientes-sql01.png)
+### Eventos auditados sobre lab.Clientes en SQL02.
+![Eventos auditados sobre lab.Clientes en SQL02.](capturas/05-auditoria/aud-06-events-lab-clientes-sql02.png)
+---
+## 06 — Validación final
+### Snapshot final de cumplimiento en SQL01.
+![Snapshot final de cumplimiento en SQL01.](capturas/06-validacion-final/fin-01-final-snapshot-sql01.png)
+### Snapshot final de cumplimiento en SQL02.
+![Snapshot final de cumplimiento en SQL02.](capturas/06-validacion-final/fin-02-final-snapshot-sql02.png)
+---
+## Tabla resumen de evidencias
+| Bloque | Captura | Valor técnico |
+|---|---|---|
+| `01-preflight-baseline` | [pf-01-dns.png](capturas/01-preflight-baseline/pf-01-dns.png) | Validación DNS del dominio y recursos críticos. |
+| `01-preflight-baseline` | [pf-02-puertos-criticos.png](capturas/01-preflight-baseline/pf-02-puertos-criticos.png) | Validación de puertos SQL Server, HADR y WSFC. |
+| `01-preflight-baseline` | [pf-03-listener-properties.png](capturas/01-preflight-baseline/pf-03-listener-properties.png) | Conexión al listener y propiedades principales. |
+| `01-preflight-baseline` | [ag-01-availability-group-health.png](capturas/01-preflight-baseline/ag-01-availability-group-health.png) | Estado general del Availability Group. |
+| `01-preflight-baseline` | [ag-02-orionlabdb-synchronized.png](capturas/01-preflight-baseline/ag-02-orionlabdb-synchronized.png) | Base OrionLabDB sincronizada dentro del AG. |
+| `01-preflight-baseline` | [job-01-jobs-ag-aware-sql01.png](capturas/01-preflight-baseline/job-01-jobs-ag-aware-sql01.png) | Jobs AG-aware en SQL01. |
+| `01-preflight-baseline` | [job-02-jobs-ag-aware-sql02.png](capturas/01-preflight-baseline/job-02-jobs-ag-aware-sql02.png) | Jobs AG-aware en SQL02. |
+| `02-security-baseline` | [sec-01-sql02-sa-enabled-baseline.png](capturas/02-security-baseline/sec-01-sql02-sa-enabled-baseline.png) | Hallazgo inicial: sa habilitado en SQL02. |
+| `02-security-baseline` | [sec-02-logins-sql01.png](capturas/02-security-baseline/sec-02-logins-sql01.png) | Inventario de logins en SQL01. |
+| `02-security-baseline` | [sec-03-logins-sql02.png](capturas/02-security-baseline/sec-03-logins-sql02.png) | Inventario de logins en SQL02. |
+| `03-surface-area` | [hrd-01-sa-disabled-sql02.png](capturas/03-surface-area/hrd-01-sa-disabled-sql02.png) | sa deshabilitado en SQL02. |
+| `03-surface-area` | [hrd-02-sql02-post-hardening.png](capturas/03-surface-area/hrd-02-sql02-post-hardening.png) | Validación post-hardening en SQL02. |
+| `03-surface-area` | [hrd-03-surface-area-sql01.png](capturas/03-surface-area/hrd-03-surface-area-sql01.png) | Superficie de ataque reducida en SQL01. |
+| `05-auditoria` | [aud-01-server-audit-sql01.png](capturas/05-auditoria/aud-01-server-audit-sql01.png) | Auditoría de servidor activa en SQL01. |
+| `05-auditoria` | [aud-02-server-audit-sql02.png](capturas/05-auditoria/aud-02-server-audit-sql02.png) | Auditoría de servidor activa en SQL02. |
+| `05-auditoria` | [aud-03-audit-guid-aligned.png](capturas/05-auditoria/aud-03-audit-guid-aligned.png) | Audit GUID alineado entre réplicas. |
+| `05-auditoria` | [aud-04-database-audit-spec.png](capturas/05-auditoria/aud-04-database-audit-spec.png) | Database Audit Specification sobre lab.Clientes. |
+| `05-auditoria` | [aud-05-events-lab-clientes-sql01.png](capturas/05-auditoria/aud-05-events-lab-clientes-sql01.png) | Eventos auditados sobre lab.Clientes en SQL01. |
+| `05-auditoria` | [aud-06-events-lab-clientes-sql02.png](capturas/05-auditoria/aud-06-events-lab-clientes-sql02.png) | Eventos auditados sobre lab.Clientes en SQL02. |
+| `04-logins-roles-permissions` | [priv-01-readonly-user-validation.png](capturas/04-logins-roles-permissions/priv-01-readonly-user-validation.png) | Validación de mínimo privilegio: usuario readonly. |
+| `04-logins-roles-permissions` | [priv-02-audit-user-validation.png](capturas/04-logins-roles-permissions/priv-02-audit-user-validation.png) | Validación de mínimo privilegio: usuario auditor. |
+| `04-logins-roles-permissions` | [priv-03-backup-operator-validation.png](capturas/04-logins-roles-permissions/priv-03-backup-operator-validation.png) | Validación de mínimo privilegio: backup operator. |
+| `04-logins-roles-permissions` | [priv-04-backup-file-generated.png](capturas/04-logins-roles-permissions/priv-04-backup-file-generated.png) | Fichero de backup generado por backup operator. |
+| `06-validacion-final` | [fin-01-final-snapshot-sql01.png](capturas/06-validacion-final/fin-01-final-snapshot-sql01.png) | Snapshot final de cumplimiento en SQL01. |
+| `06-validacion-final` | [fin-02-final-snapshot-sql02.png](capturas/06-validacion-final/fin-02-final-snapshot-sql02.png) | Snapshot final de cumplimiento en SQL02. |
 
 ## Estado
 
-Evidencias documentadas y criterios de publicación definidos.
-
-Las capturas finales deben añadirse únicamente tras revisar que no contienen datos sensibles.
+Evidencias seleccionadas, organizadas y listas para publicación en GitHub.
