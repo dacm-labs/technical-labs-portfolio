@@ -208,17 +208,34 @@ Documentación principal:
 
 ## Roadmap técnico
 
-El roadmap prioriza laboratorios que continúan de forma natural lo ya construido en AÉGIDA, LAB-01, LAB-02 y LAB-03.
+### Estado actual
+
+| Laboratorio | Estado | Papel dentro del portfolio |
+|---|---|---|
+| LAB-00 — AÉGIDA Case Study | Completado v1 | Base defensiva, segmentación, AD, pfSense, Wazuh y enfoque Blue Team. |
+| LAB-01 — SQL Server DBA | Completado v1 | Base DBA: instalación, backups, recovery, seguridad, jobs, auditoría y monitorización inicial. |
+| LAB-02 — SQL Server Always On HADR | Completado v1 | Alta disponibilidad con WSFC, listener, failover, failback y jobs AG-aware. |
+| LAB-03 — SQL Server Hardening, Audit & Compliance | Completado v1 | Endurecimiento, auditoría, trazabilidad, mínimo privilegio y checklist de cumplimiento sobre Always On. |
+
+### Próximos laboratorios previstos
+
+El roadmap prioriza laboratorios que aprovechan la plataforma ya construida y aumentan su valor operativo: monitorización, seguridad defensiva, automatización, cloud híbrido y datos.
 
 | Prioridad | Línea | Laboratorio / evolución prevista | Objetivo técnico |
 |---|---|---|---|
-| 1 | Monitorización y operación | LAB-04 — Monitoring Stack para SQL Server y Windows | Métricas, alertas, logs, dashboards y operación continua del entorno. |
-| 2 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Protección de identidad, Tier 0, GPOs, auditoría y administración privilegiada. |
-| 3 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Reglas, alertas, FIM, playbooks y respuesta básica ante incidentes. |
-| 4 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Identidad híbrida, backup, monitorización y servicios cloud conectados al laboratorio. |
-| 5 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Scripts reproducibles para administración, reporting, validaciones y despliegues. |
-| 6 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Pipelines, análisis de datos, Python, SQL y base futura para IA aplicada. |
+| 1 | Monitorización y operación | LAB-04 — Monitoring Stack para SQL Server y Windows | Centralizar métricas, logs, alertas y dashboards sobre SQL Server, Windows, Always On y servicios críticos. |
+| 2 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Reforzar identidad, administración privilegiada, Tier 0, GPOs, auditoría de cambios y control de acceso. |
+| 3 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Correlación de eventos, reglas, alertas, FIM, casos de uso defensivos y respuesta básica ante incidentes. |
+| 4 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Conectar fundamentos cloud con identidad, backup, monitorización, seguridad y servicios híbridos. |
+| 5 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Crear scripts reutilizables para inventario, reporting, validaciones, mantenimiento y operación diaria. |
+| 6 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Construir base de datos, pipelines, análisis con Python/SQL y preparación para proyectos de IA aplicada. |
 
-### Continuidad técnica prevista
+### Criterio de continuidad
 
-La evolución prevista se centra en reforzar monitorización, seguridad, auditoría, hardening y operación continua sobre la plataforma ya construida, manteniendo continuidad con los laboratorios SQL Server y el enfoque defensivo del portfolio.
+La evolución prevista no arranca laboratorios aislados: cada nuevo bloque reutiliza o amplía la infraestructura ya documentada. La prioridad inmediata es **LAB-04 Monitoring**, porque completa la cadena profesional construida hasta ahora:
+
+```text
+DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación
+```
+
+Después, el portfolio puede crecer hacia Active Directory defensivo, SOC/Blue Team, automatización, cloud híbrido y datos/IA sin perder coherencia técnica.
