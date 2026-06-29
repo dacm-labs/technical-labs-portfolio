@@ -92,6 +92,7 @@ Galería completa: [evidencias.md](evidencias.md).
 | [Auditoría y monitorización](auditoria-monitorizacion.md) | Avisos, SQL Server Audit y seguimiento operativo. |
 | [Dashboard DBA](dashboard-dba.md) | Vistas DBA, Query Store y salud final del entorno. |
 | [Evidencias](evidencias.md) | Galería visual de capturas publicadas. |
+| [Scripts](scripts/README.md) | Scripts públicos de revisión y validación. |
 | [Competencias técnicas](valor-profesional.md) | Valor profesional del laboratorio. |
 | [Lecciones aprendidas](lecciones-aprendidas.md) | Aprendizajes, incidencias y mejoras futuras. |
 
