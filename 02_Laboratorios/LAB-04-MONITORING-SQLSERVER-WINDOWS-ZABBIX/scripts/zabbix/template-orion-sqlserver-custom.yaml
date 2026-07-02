@@ -1,0 +1,11 @@
+# ORION LAB-04 - Zabbix SQL Server custom template
+#
+# Status: pending export from Zabbix UI.
+#
+# This file is reserved for the final exported template after creating:
+# - ORION SQL Server Custom Checks template
+# - SQL custom items
+# - SQL custom triggers
+# - Host-level macros for expected AG role
+#
+# Do not import this file into Zabbix yet.
