@@ -6,16 +6,17 @@ Ejecuta checks SQL Server para Zabbix Agent 2.
 .DESCRIPTION
 Wrapper local para exponer métricas SQL Server / Always On a Zabbix mediante UserParameters.
 El script devuelve un único valor por ejecución, compatible con zabbix_get e items numéricos.
+Ejecuta checks SQL Server usando Windows Authentication con la cuenta ORION\svc_zbx_sqlmon.
 
-La contraseña no se almacena en Git.
+No se almacenan credenciales SQL en Git.
 Debe existir un fichero local en cada nodo SQL:
 
 C:\ProgramData\ORION\ZabbixSql\orion_sql_monitor.env
 
 Formato:
 Server=localhost
-Username=zbx_monitor
-Password=PASSWORD_LOCAL_NO_VERSIONADA
+
+
 #>
 
 [CmdletBinding()]
@@ -71,7 +72,7 @@ function Read-OrionSqlConfig {
         }
     }
 
-    foreach ($RequiredKey in @("Server", "Username", "Password")) {
+    foreach ($RequiredKey in @("Server")) {
         if (-not $Config.ContainsKey($RequiredKey) -or [string]::IsNullOrWhiteSpace($Config[$RequiredKey])) {
             throw "Missing required key in config file: $RequiredKey"
         }
@@ -88,7 +89,7 @@ function Invoke-SqlScalar {
 
     $Cfg = Read-OrionSqlConfig -Path $ConfigPath
 
-    $ConnectionString = "Server=$($Cfg.Server);Database=$Database;User ID=$($Cfg.Username);Password=$($Cfg.Password);Encrypt=False;TrustServerCertificate=True;Connection Timeout=5;"
+    $ConnectionString = "Server=$($Cfg.Server);Database=$Database;Integrated Security=True;Encrypt=False;TrustServerCertificate=True;Connection Timeout=5;"
 
     $Connection = New-Object System.Data.SqlClient.SqlConnection
     $Connection.ConnectionString = $ConnectionString

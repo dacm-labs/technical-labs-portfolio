@@ -156,3 +156,37 @@ La validación confirma que el entorno está preparado para la siguiente fase de
 - Documentar resultados y evidencias.
 
 Esta fase deja establecida la base técnica para pasar de monitorización Windows general a monitorización DBA específica sobre SQL Server y Always On.
+
+## Validación Zabbix SQL custom con Windows Authentication
+
+Se valida la ejecución de checks SQL Server personalizados desde ORN-MON01 mediante zabbix_get contra los dos nodos SQL del Availability Group.
+
+### Estado validado desde ORN-MON01
+
+| Host | IP | agent.ping | agent.version | hostname | SQL ping | SQL service | SQL Agent | AG health | is_primary |
+|---|---:|---:|---|---|---:|---:|---:|---:|---:|
+| ORN-SQL01 | 10.10.20.20 | 1 | 7.0.27 | ORN-SQL01 | 1 | 1 | 1 | 1 | 1 |
+| ORN-SQL02 | 10.10.20.21 | 1 | 7.0.27 | ORN-SQL02 | 1 | 1 | 1 | 1 | 0 |
+
+### Diseño de autenticación
+
+Los checks SQL custom se diseñan para funcionar con Windows Authentication.
+El fichero local de configuración queda limitado a indicar Server=tcp:localhost,1433.
+No se almacenan usuarios SQL ni contraseñas SQL en Git ni en ficheros locales.
+El script versionado queda alineado con Integrated Security=True.
+
+### Cuenta de servicio
+
+La cuenta técnica definida para la monitorización SQL custom es ORION\svc_zbx_sqlmon.
+
+| Host | Estado operacional del servicio Zabbix Agent 2 | Resultado |
+|---|---|---|
+| ORN-SQL01 | Running / Auto / LocalSystem | Checks SQL custom OK |
+| ORN-SQL02 | Running / Auto / ORION\svc_zbx_sqlmon | Checks SQL custom OK |
+
+En ORN-SQL01 se intentó ejecutar el servicio con ORION\svc_zbx_sqlmon, pero se observaron incidencias de arranque del servicio. Para mantener el entorno estable y no romper la monitorización base, se recupera temporalmente el servicio con LocalSystem.
+La validación funcional desde ORN-MON01 confirma que ORN-SQL01 sigue devolviendo correctamente los checks SQL custom tras la recuperación.
+
+### Decisión operacional
+
+Se prioriza estabilidad del laboratorio: ambos nodos quedan monitorizando correctamente, devuelven métricas SQL custom válidas y los scripts quedan preparados para Windows Authentication. El ajuste fino de ejecución homogénea del servicio en ORN-SQL01 queda identificado para revisión posterior.
