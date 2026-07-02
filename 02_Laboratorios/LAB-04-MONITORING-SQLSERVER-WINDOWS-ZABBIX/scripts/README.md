@@ -15,6 +15,7 @@ Los scripts se dividen en tres bloques:
 Scripts para validaciones desde Windows Server:
 
 - 02-check-sql-services.ps1: valida servicios MSSQLSERVER y SQLSERVERAGENT.
+- 03-check-sql-dmv.ps1: wrapper para checks SQL custom ejecutados por Zabbix Agent 2.
 - 05-create-perfmon-baseline-collector.ps1: crea un Data Collector Set de PerfMon con logman.
 - 06-check-windows-critical-events.ps1: revisa eventos críticos, errores y warnings del log System.
 - 07-check-cluster-dns-health.ps1: valida clúster, DNS y canal seguro de dominio.
@@ -34,18 +35,28 @@ Scripts para validaciones desde SQL Server Management Studio:
 
 ## scripts/zabbix
 
-Contenido reservado para la fase Zabbix:
+Archivos para integración con Zabbix Agent 2 y la fase de template/triggers:
 
-- userparameters_orion_sql.conf
-- template-orion-sqlserver-custom.yaml
-- triggers-documentation.md
+- userparameters_orion_sql.conf: UserParameters SQL custom validados.
+- template-orion-sqlserver-custom.yaml: reservado para export final del template de Zabbix UI.
+- triggers-documentation.md: documentación prevista de triggers SQL custom.
 
-## Uso recomendado
+## Autenticación
 
-Primero ejecutar los scripts nativos para obtener baseline.
+Los checks SQL custom están diseñados para Windows Authentication.
 
-Después desplegar Zabbix y reutilizar parte de estas validaciones como checks personalizados.
+El fichero local en cada nodo SQL solo debe contener el servidor local:
+
+```text
+Server=tcp:localhost,1433
+```
+
+No se versionan usuarios SQL ni secretos.
 
 ## Estado
 
-Scripts base de monitorización nativa creados durante el BLOQUE 1.
+Scripts nativos creados durante el BLOQUE 1.
+
+Wrapper PowerShell y UserParameters SQL custom creados y validados durante el BLOQUE 5.
+
+Pendiente de BLOQUE 6: crear template, items, triggers y dashboard en Zabbix UI.
