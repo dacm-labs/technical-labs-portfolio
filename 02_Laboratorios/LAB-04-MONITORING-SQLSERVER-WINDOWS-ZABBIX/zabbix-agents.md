@@ -113,3 +113,26 @@ ORN-SQL02
 | ORN-SQL01 | ORN-SQL01_ZABBIX_AGENT2_INSTALLED_BASELINE |
 | ORN-SQL02 | ORN-SQL02_ZABBIX_AGENT2_INSTALLED_BASELINE |
 | ORN-MON01 | ORN-MON01_ZABBIX_WINDOWS_HOSTS_ADDED_BASELINE |
+
+
+## Infraestructura Windows completa monitorizada
+
+Se amplía la monitorización base con Zabbix Agent 2 a todos los nodos Windows del laboratorio ORION.
+
+| Host | IP | Rol | Plantilla | Interfaz | Estado |
+|---|---|---|---|---|---|
+| ORN-DC01 | 10.10.20.10 | Domain Controller / DNS | Windows by Zabbix agent | 10.10.20.10:10050 | ZBX verde |
+| ORN-FSW01 | 10.10.20.40 | File Share Witness / Quorum | Windows by Zabbix agent | 10.10.20.40:10050 | ZBX verde |
+| ORN-DBA01 | 10.10.20.30 | Estación administrativa DBA | Windows by Zabbix agent | 10.10.20.30:10050 | ZBX verde |
+| ORN-SQL01 | 10.10.20.20 | SQL Server / Always On node | Windows by Zabbix agent | 10.10.20.20:10050 | ZBX verde |
+| ORN-SQL02 | 10.10.20.21 | SQL Server / Always On node | Windows by Zabbix agent | 10.10.20.21:10050 | ZBX verde |
+
+## Validaciones adicionales
+
+Validación ORN-DC01 desde ORN-MON01:
+
+```bash
+nc -vz 10.10.20.10 10050
+zabbix_get -s 10.10.20.10 -p 10050 -k agent.ping
+zabbix_get -s 10.10.20.10 -p 10050 -k agent.version
+zabbix_get -s 10.10.20.10 -p 10050 -k system.hostname
