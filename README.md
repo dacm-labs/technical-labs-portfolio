@@ -27,6 +27,7 @@ Competencias demostradas en los laboratorios publicados:
 - SQL Server DBA: instalación, backup, recovery, seguridad, auditoría y monitorización.
 - Alta disponibilidad con SQL Server Always On Availability Groups y Windows Server Failover Cluster.
 - Hardening SQL Server, auditoría, trazabilidad y mínimo privilegio sobre entorno HADR.
+- Monitorización centralizada con Zabbix Server, Zabbix Agent 2, UserParameters y checks SQL custom.
 - Ciberseguridad defensiva, segmentación de red, Active Directory, pfSense y Wazuh.
 - Operación IT, troubleshooting, continuidad de servicio y documentación técnica.
 - Automatización y validación con PowerShell, T-SQL y evidencias reproducibles.
@@ -70,6 +71,7 @@ LAB-00 AÉGIDA → LAB-01 SQL Server DBA → LAB-02 Always On → LAB-03 Hardeni
 | [LAB-01 — SQL Server DBA Backup, Recovery, Security, Monitoring & Maintenance](02_Laboratorios/LAB-01-SQLSERVER-DBA-BACKUP-SECURITY) | Completado v1 | SQL Server / DBA / Seguridad / Monitorización | SQL Server 2025 en dominio con backup, restore, PITR, SQL Agent, Database Mail, alertas, mínimo privilegio, auditoría, Query Store y dashboard DBA. |
 | [LAB-02 — SQL Server Always On Availability Groups](02_Laboratorios/LAB-02-SQLSERVER-ALWAYS-ON-HADR) | Completado v1 | SQL Server / Alta disponibilidad / HA-DR | WSFC, File Share Witness, Availability Group, listener, failover, failback, lectura en secundaria, jobs AG-aware y validación final de continuidad. |
 | [LAB-03 — SQL Server Hardening, Audit & Compliance](02_Laboratorios/LAB-03-SQLSERVER-HARDENING-AUDIT-COMPLIANCE) | Completado v1 | SQL Server / Seguridad / Auditoría / Compliance | Hardening de SQL Server Always On, Windows-only, `sa` deshabilitado, auditoría de servidor y base de datos, trazabilidad y validación de mínimo privilegio con usuarios reales. |
+| [LAB-04 — Monitoring Stack for SQL Server & Windows](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX) | En curso avanzado | Monitorización / Operación / SQL Server | Zabbix Server 7.0 LTS, Zabbix Agent 2, monitorización Windows, checks SQL custom con UserParameters, Always On y validación desde ORN-MON01. |
 
 ---
 
@@ -188,6 +190,35 @@ Documentación principal:
 
 ---
 
+## LAB-04 — Monitoring Stack for SQL Server & Windows
+
+LAB-04 incorpora monitorización centralizada sobre la plataforma SQL Server Always On construida en los laboratorios anteriores.
+
+Incluye:
+
+- Baseline de monitorización nativa Windows / SQL Server.
+- Zabbix Server 7.0 LTS sobre ORN-MON01.
+- Zabbix Agent 2 7.0.27 en nodos Windows.
+- Monitorización base Windows con plantilla `Windows by Zabbix agent`.
+- UserParameters para checks SQL custom.
+- Wrapper PowerShell para checks SQL Server mediante Windows Authentication.
+- Validación desde ORN-MON01 mediante `zabbix_get`.
+- Checks SQL custom para conectividad SQL, servicios, SQL Agent y Always On.
+
+Documentación principal:
+
+| Documento | Contenido |
+|---|---|
+| [README del laboratorio](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/README.md) | Visión general y estado del laboratorio. |
+| [Monitorización nativa](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/monitorizacion-nativa.md) | Baseline Windows, SQL Server, PerfMon, DMVs y clúster. |
+| [Zabbix Server](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/zabbix-server.md) | Despliegue de ORN-MON01 y Zabbix Server. |
+| [Zabbix Agents](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/zabbix-agents.md) | Instalación y validación de agentes Windows. |
+| [SQL Server Monitoring](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/sqlserver-monitoring.md) | Checks SQL custom y validaciones contra SQL01/SQL02. |
+| [Validaciones](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/validaciones.md) | Estado validado de Zabbix, agentes y checks SQL. |
+| [Scripts](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/scripts/README.md) | Scripts SQL, PowerShell y Zabbix. |
+
+---
+
 ## Áreas técnicas trabajadas
 
 - Administración de sistemas Windows y Linux.
@@ -198,7 +229,7 @@ Documentación principal:
 - SQL Server DBA: backup, recovery, seguridad, auditoría y rendimiento.
 - SQL Server Always On, WSFC, listener, failover y recuperación.
 - Hardening SQL Server, mínimo privilegio y cumplimiento.
-- Monitorización SOC/SIEM y observabilidad.
+- Monitorización centralizada, observabilidad y operación.
 - Automatización con PowerShell y T-SQL.
 - Troubleshooting técnico.
 - Documentación técnica.
@@ -216,26 +247,26 @@ Documentación principal:
 | LAB-01 — SQL Server DBA | Completado v1 | Base DBA: instalación, backups, recovery, seguridad, jobs, auditoría y monitorización inicial. |
 | LAB-02 — SQL Server Always On HADR | Completado v1 | Alta disponibilidad con WSFC, listener, failover, failback y jobs AG-aware. |
 | LAB-03 — SQL Server Hardening, Audit & Compliance | Completado v1 | Endurecimiento, auditoría, trazabilidad, mínimo privilegio y checklist de cumplimiento sobre Always On. |
+| LAB-04 — Monitoring Stack for SQL Server & Windows | En curso avanzado | Zabbix Server, agentes Windows, checks SQL custom, UserParameters y validación desde ORN-MON01. |
 
 ### Próximos laboratorios previstos
 
-El roadmap prioriza laboratorios que aprovechan la plataforma ya construida y aumentan su valor operativo: monitorización, seguridad defensiva, automatización, cloud híbrido y datos.
+El roadmap prioriza laboratorios que aprovechan la plataforma ya construida y aumentan su valor operativo: Active Directory defensivo, SOC/Blue Team, automatización, cloud híbrido y datos.
 
 | Prioridad | Línea | Laboratorio / evolución prevista | Objetivo técnico |
 |---|---|---|---|
-| 1 | Monitorización y operación | LAB-04 — Monitoring Stack para SQL Server y Windows | Centralizar métricas, logs, alertas y dashboards sobre SQL Server, Windows, Always On y servicios críticos. |
-| 2 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Reforzar identidad, administración privilegiada, Tier 0, GPOs, auditoría de cambios y control de acceso. |
-| 3 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Correlación de eventos, reglas, alertas, FIM, casos de uso defensivos y respuesta básica ante incidentes. |
-| 4 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Conectar fundamentos cloud con identidad, backup, monitorización, seguridad y servicios híbridos. |
-| 5 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Crear scripts reutilizables para inventario, reporting, validaciones, mantenimiento y operación diaria. |
-| 6 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Construir base de datos, pipelines, análisis con Python/SQL y preparación para proyectos de IA aplicada. |
+| 1 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Reforzar identidad, administración privilegiada, Tier 0, GPOs, auditoría de cambios y control de acceso. |
+| 2 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Correlación de eventos, reglas, alertas, FIM, casos de uso defensivos y respuesta básica ante incidentes. |
+| 3 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Conectar fundamentos cloud con identidad, backup, monitorización, seguridad y servicios híbridos. |
+| 4 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Crear scripts reutilizables para inventario, reporting, validaciones, mantenimiento y operación diaria. |
+| 5 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Construir base de datos, pipelines, análisis con Python/SQL y preparación para proyectos de IA aplicada. |
 
 ### Criterio de continuidad
 
-La evolución prevista no arranca laboratorios aislados: cada nuevo bloque reutiliza o amplía la infraestructura ya documentada. La prioridad inmediata es **LAB-04 Monitoring**, porque completa la cadena profesional construida hasta ahora:
+La evolución prevista no arranca laboratorios aislados: cada nuevo bloque reutiliza o amplía la infraestructura ya documentada. Tras LAB-04 Monitoring, la prioridad natural pasa a **LAB-05 AD Hardening & Tiering**, manteniendo la cadena profesional construida hasta ahora:
 
 ```text
-DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación
+DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación → Identidad defensiva
 ```
 
-Después, el portfolio puede crecer hacia Active Directory defensivo, SOC/Blue Team, automatización, cloud híbrido y datos/IA sin perder coherencia técnica.
+Después, el portfolio puede crecer hacia SOC/Blue Team, automatización, cloud híbrido y datos/IA sin perder coherencia técnica.
