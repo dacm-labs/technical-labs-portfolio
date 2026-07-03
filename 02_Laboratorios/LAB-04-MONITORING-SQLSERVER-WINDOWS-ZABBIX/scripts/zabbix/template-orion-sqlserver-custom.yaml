@@ -1,11 +1,172 @@
-# ORION LAB-04 - Zabbix SQL Server custom template
-#
-# Status: pending export from Zabbix UI.
-#
-# This file is reserved for the final exported template after creating:
-# - ORION SQL Server Custom Checks template
-# - SQL custom items
-# - SQL custom triggers
-# - Host-level macros for expected AG role
-#
-# Do not import this file into Zabbix yet.
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 748ad4d098d447d492bb935c907f652f
+      name: Templates/Databases
+  templates:
+    - uuid: ebc89c51f4f14ff988251ee51e9b4b67
+      template: 'ORION SQL Server Custom Checks'
+      name: 'ORION SQL Server Custom Checks'
+      description: |
+        Custom SQL Server and Always On checks for LAB-04.
+        Uses Zabbix Agent 2 UserParameters and PowerShell wrapper.
+        Validated from ORN-MON01 against ORN-SQL01 and ORN-SQL02.s
+      groups:
+        - name: Templates/Databases
+      items:
+        - uuid: 6066d342c96b41fd8ca05477e84b8ab2
+          name: 'Always On health'
+          key: orion.sql.ag.health
+          history: 7d
+          trends: 90d
+          description: |
+            Checks local Always On synchronization health.
+            Expected value: 1.
+          triggers:
+            - uuid: 866ab5b63878461c89704d5d78e487dd
+              expression: 'max(/ORION SQL Server Custom Checks/orion.sql.ag.health,3m)=0'
+              name: 'Always On unhealthy on {HOST.NAME}'
+              event_name: 'Always On unhealthy on {HOST.NAME}'
+              priority: HIGH
+              description: |
+                Always On synchronization health is not healthy for 3 minutes.
+                Expected value: 1.
+        - uuid: 7727264189a8416aaca298c200175a65
+          name: 'Always On is primary for OrionLabDB'
+          key: 'orion.sql.ag.is_primary[OrionLabDB]'
+          history: 7d
+          trends: 90d
+          description: |
+            Checks whether the local SQL Server replica is primary for OrionLabDB.
+            Expected value depends on the node role: 1 on primary, 0 on secondary.
+        - uuid: fc88f5dab9194478a3e7c5597dbc6740
+          name: 'SQL Server Agent running'
+          key: orion.sql.agent.running
+          history: 7d
+          trends: 90d
+          description: |
+            Checks if SQL Server Agent service is running.
+            Expected value: 1.
+          triggers:
+            - uuid: d5d6752203634186bbc586096eb69f28
+              expression: 'max(/ORION SQL Server Custom Checks/orion.sql.agent.running,3m)=0'
+              name: 'SQL Server Agent down on {HOST.NAME}'
+              event_name: 'SQL Server Agent down on {HOST.NAME}'
+              priority: HIGH
+              description: |
+                SQL Server Agent service is not running for 3 minutes.
+                Expected value: 1.
+        - uuid: 6f050472409d4722b9e7ce8261b57a4f
+          name: 'SQL backup FULL age hours for OrionLabDB'
+          key: 'orion.sql.backup.full.age.hours[OrionLabDB]'
+          delay: 5m
+          history: 7d
+          trends: 90d
+          units: h
+          description: |
+            Returns the age in hours of the last FULL backup for OrionLabDB.
+            Expected value depends on backup policy.
+        - uuid: eb52232209044e50bff0dacc5e12b7b5
+          name: 'SQL backup LOG age hours for OrionLabDB'
+          key: 'orion.sql.backup.log.age.hours[OrionLabDB]'
+          delay: 5m
+          history: 7d
+          trends: 90d
+          units: h
+          description: |
+            Returns the age in hours of the last LOG backup for OrionLabDB.
+            Expected value depends on backup policy.
+        - uuid: 5494516709624e7bb4c65636a298123b
+          name: 'SQL blocking sessions'
+          key: orion.sql.blocking.sessions
+          history: 7d
+          trends: 90d
+          description: |
+            Counts SQL Server requests currently blocked by another session.
+            Expected value: 0.
+          triggers:
+            - uuid: edf3a8382bf14170b5cb71983d83b0f0
+              expression: 'min(/ORION SQL Server Custom Checks/orion.sql.blocking.sessions,5m)>0'
+              name: 'SQL blocking sessions detected on {HOST.NAME}'
+              event_name: 'SQL blocking sessions detected on {HOST.NAME}'
+              priority: WARNING
+              description: |
+                SQL Server has blocked sessions during the last 5 minutes.
+                Expected value: 0.
+        - uuid: 69847b72ac8542a6867bba5b68d2fa1d
+          name: 'SQL Agent failed jobs last 24h'
+          key: orion.sql.jobs.failed24h
+          delay: 5m
+          history: 7d
+          trends: 90d
+          description: |
+            Counts SQL Server Agent jobs failed during the last 24 hours.
+            Expected value: 0.
+          triggers:
+            - uuid: b9402a7b1b9d4b6fb8f6dbb0b7374dc0
+              expression: 'last(/ORION SQL Server Custom Checks/orion.sql.jobs.failed24h)>0'
+              name: 'SQL Agent failed jobs detected on {HOST.NAME}'
+              event_name: 'SQL Agent failed jobs detected on {HOST.NAME}'
+              priority: AVERAGE
+              description: |
+                One or more SQL Server Agent jobs failed during the last 24 hours.
+                Expected value: 0.
+        - uuid: b9695fa57e404393adad55a84c3676e6
+          name: 'SQL custom ping'
+          key: orion.sql.ping
+          history: 7d
+          trends: 90d
+          description: |
+            Validates SQL Server custom connectivity through Zabbix Agent 2 UserParameter.
+            Expected value: 1.
+          triggers:
+            - uuid: b993c028c55a4e6eb3af5fcd98fe3b38
+              expression: 'max(/ORION SQL Server Custom Checks/orion.sql.ping,3m)=0'
+              name: 'SQL custom ping failed on {HOST.NAME}'
+              event_name: 'SQL custom ping failed on {HOST.NAME}'
+              priority: HIGH
+              description: |
+                SQL Server custom monitoring check is not returning OK for 3 minutes.
+                Expected value: 1.
+        - uuid: 60048ac701d5474597e92ca4d92043fa
+          name: 'SQL Server service running'
+          key: orion.sql.service.running
+          history: 7d
+          trends: 90d
+          description: |
+            Checks if SQL Server service MSSQLSERVER is running.
+            Expected value: 1.
+          triggers:
+            - uuid: 96704db09fb34468a444b2f1e72af961
+              expression: 'max(/ORION SQL Server Custom Checks/orion.sql.service.running,3m)=0'
+              name: 'SQL Server service down on {HOST.NAME}'
+              event_name: 'SQL Server service down on {HOST.NAME}'
+              priority: DISASTER
+              description: |
+                SQL Server Database Engine service is not running for 3 minutes.
+                Expected value: 1.
+        - uuid: 43599ef35c5e421393cf4f26c3fb09fe
+          name: 'SQL user sessions'
+          key: orion.sql.sessions.user
+          history: 7d
+          trends: 90d
+          description: |
+            Counts active SQL Server user sessions.
+            Expected value: numeric session count.
+  triggers:
+    - uuid: d0bd335c62fa4f048086d67dd341d6dd
+      expression: 'last(/ORION SQL Server Custom Checks/orion.sql.backup.full.age.hours[OrionLabDB])>168 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1'
+      name: 'SQL FULL backup old for OrionLabDB on {HOST.NAME}'
+      event_name: 'SQL FULL backup old for OrionLabDB on {HOST.NAME}'
+      priority: AVERAGE
+      description: |
+        The last FULL backup for OrionLabDB is older than 168 hours on the current primary replica.
+        Expected value: <= 168 hours on primary.
+    - uuid: 06a53015c1974c92acff874585cb634a
+      expression: 'last(/ORION SQL Server Custom Checks/orion.sql.backup.log.age.hours[OrionLabDB])>24 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1'
+      name: 'SQL LOG backup old for OrionLabDB on {HOST.NAME}'
+      event_name: 'SQL LOG backup old for OrionLabDB on {HOST.NAME}'
+      priority: AVERAGE
+      description: |
+        The last LOG backup for OrionLabDB is older than 24 hours on the current primary replica.
+        Expected value: <= 24 hours on primary.
