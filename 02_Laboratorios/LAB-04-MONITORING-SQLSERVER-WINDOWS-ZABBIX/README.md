@@ -2,23 +2,25 @@
 
 ## Objetivo
 
-Implementar un laboratorio de monitorización para SQL Server, Windows Server y Always On Availability Groups.
+Implementar un stack de monitorización centralizada para SQL Server, Windows Server y Always On Availability Groups, partiendo de una validación nativa del entorno y evolucionando hacia Zabbix Server con checks SQL custom, items, triggers y evidencias reproducibles.
 
-El laboratorio parte de una validación nativa previa con herramientas de Windows y SQL Server y evoluciona hacia monitorización centralizada con Zabbix 7.0 LTS.
-
-## Alcance
+## Alcance completado
 
 - Monitorización nativa Windows / SQL Server.
-- Performance Counters.
-- PerfMon / logman.
-- SQL Server DMVs.
-- SQL Server Error Log.
-- Windows Event Log.
-- Validación de DNS, dominio y clúster.
-- Despliegue de Zabbix Server.
-- Instalación de Zabbix Agent 2 en nodos Windows.
-- Checks personalizados para SQL Server y Always On.
-- Preparación de template, items, triggers, dashboards y evidencias.
+- Performance Counters y PerfMon / logman.
+- SQL Server DMVs, SQL Error Log y Windows Event Log.
+- Validación de DNS, dominio, clúster, listener y Always On.
+- Despliegue de ORN-MON01 con Ubuntu Server y Zabbix Server 7.0 LTS.
+- Instalación de Zabbix Agent 2 en los nodos Windows principales.
+- Monitorización base Windows con `Windows by Zabbix agent`.
+- Checks SQL custom mediante Zabbix Agent 2, PowerShell y Windows Authentication.
+- Template reutilizable `ORION SQL Server Custom Checks`.
+- 10 items SQL custom por nodo SQL.
+- 8 triggers SQL custom.
+- Lógica primary-only para backups en Always On.
+- Alerta real por LOG backup antiguo en el primario y recuperación tras backup LOG manual.
+- Export del template Zabbix a YAML.
+- Manifest y script de extracción de evidencias visuales seleccionadas.
 
 ## Entorno
 
@@ -33,79 +35,104 @@ El laboratorio parte de una validación nativa previa con herramientas de Window
 | ORN-DBA01 | DBA workstation | 10.10.20.30 |
 | ORN-MON01 | Zabbix Server | 10.10.20.70 |
 
-## Bloques del laboratorio
+## Estado final
 
-### BLOQUE 0 — Preflight del entorno
+| Bloque | Estado | Resultado |
+|---|---|---|
+| BLOQUE 0 — Preflight | Completado | RAM, DNS, puertos, Always On, backups, jobs, auditoría y hardening validados. |
+| BLOQUE 1 — Monitorización nativa | Completado | Get-Counter, PerfMon, DMVs, Error Log, Event Log y clúster validados. |
+| BLOQUE 2 — ORN-MON01 | Completado | Ubuntu Server desplegado, actualizado y preparado. |
+| BLOQUE 3 — Zabbix Server | Completado | Zabbix Server 7.0.27, PostgreSQL, Apache, PHP-FPM y frontend operativos. |
+| BLOQUE 4 — Zabbix Agents | Completado | Nodos Windows monitorizados con Zabbix Agent 2 y ZBX verde. |
+| BLOQUE 5 — SQL custom monitoring | Completado | UserParameters, wrapper PowerShell y checks SQL validados con zabbix_get. |
+| BLOQUE 6 — Template, items, triggers y evidencias | Completado | Template exportado, items y triggers creados, alerta real generada y recuperada. |
 
-Validación inicial de memoria, conectividad, DNS, puertos, Always On, backups, jobs, auditoría y hardening.
+## Resultado operativo
 
-### BLOQUE 1 — Monitorización nativa Windows / SQL Server
+| Elemento | Resultado |
+|---|---|
+| Zabbix Server | ORN-MON01 operativo |
+| Versión Zabbix | 7.0.27 |
+| Hosts Windows monitorizados | ORN-DC01, ORN-FSW01, ORN-DBA01, ORN-SQL01, ORN-SQL02 |
+| Disponibilidad Zabbix | ZBX verde en hosts principales |
+| Template base Windows | Windows by Zabbix agent |
+| Template SQL custom | ORION SQL Server Custom Checks |
+| Items SQL custom | 10 por nodo SQL |
+| Triggers SQL custom | 8 |
+| Export template | `scripts/zabbix/template-orion-sqlserver-custom.yaml` |
+| Validación real | Problema SQL LOG backup old generado y resuelto |
+| Estado final SQL custom | Sin problemas SQL custom activos |
 
-Validación de herramientas nativas antes de Zabbix:
+## Items SQL custom
 
-- Get-Counter.
-- PerfMon / logman.
-- SQL DMVs.
-- SQL Error Log.
-- Windows Event Log.
-- Cluster PowerShell.
-- DNS y secure channel.
+| Item | Key | Resultado esperado |
+|---|---|---:|
+| SQL custom ping | `orion.sql.ping` | 1 |
+| SQL Server service running | `orion.sql.service.running` | 1 |
+| SQL Server Agent running | `orion.sql.agent.running` | 1 |
+| SQL user sessions | `orion.sql.sessions.user` | valor numérico |
+| SQL blocking sessions | `orion.sql.blocking.sessions` | 0 |
+| SQL Agent failed jobs last 24h | `orion.sql.jobs.failed24h` | 0 |
+| SQL backup FULL age hours for OrionLabDB | `orion.sql.backup.full.age.hours[OrionLabDB]` | según política |
+| SQL backup LOG age hours for OrionLabDB | `orion.sql.backup.log.age.hours[OrionLabDB]` | según política |
+| Always On health | `orion.sql.ag.health` | 1 |
+| Always On is primary for OrionLabDB | `orion.sql.ag.is_primary[OrionLabDB]` | 1 en primario, 0 en secundario |
 
-### BLOQUE 2 — Creación de ORN-MON01
+## Triggers SQL custom
 
-Creación de la VM Ubuntu Server que aloja Zabbix Server.
+| Trigger | Severidad | Objetivo |
+|---|---|---|
+| SQL custom ping failed on `{HOST.NAME}` | High | Detectar fallo general del check SQL custom. |
+| SQL Server service down on `{HOST.NAME}` | Disaster | Detectar SQL Server Database Engine detenido. |
+| SQL Server Agent down on `{HOST.NAME}` | High | Detectar SQL Server Agent detenido. |
+| Always On unhealthy on `{HOST.NAME}` | High | Detectar estado no saludable del AG. |
+| SQL blocking sessions detected on `{HOST.NAME}` | Warning | Detectar bloqueos SQL sostenidos. |
+| SQL Agent failed jobs detected on `{HOST.NAME}` | Average | Detectar jobs fallidos en 24 horas. |
+| SQL FULL backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar por FULL antiguo solo en primario. |
+| SQL LOG backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar por LOG antiguo solo en primario. |
 
-### BLOQUE 3 — Instalación de Zabbix Server
+## Diseño anti-falsos positivos
 
-Instalación y configuración inicial de Zabbix Server 7.0 LTS, PostgreSQL y frontend web.
+Los triggers de backups incluyen lógica primary-only:
 
-### BLOQUE 4 — Zabbix Agents
+```text
+last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1
+```
 
-Instalación de Zabbix Agent 2 en nodos Windows y validación de hosts monitorizados.
+Esto evita que ORN-SQL02, como réplica secundaria, genere alertas por antigüedad de backups cuando el control operativo se valida en el primario.
 
-### BLOQUE 5 — Monitorización SQL Server avanzada
+## Evidencias
 
-Checks personalizados para:
+El manifest y el script de extracción de evidencias se encuentran en:
 
-- Conectividad SQL.
-- Servicios SQL Server.
-- SQL Server Agent.
-- Always On.
-- Backups.
-- Jobs SQL Agent.
-- Bloqueos.
-- Sesiones.
+- [Evidencias LAB-04](evidencias/README.md)
+- [Manifest de capturas](evidencias/manifest.md)
+- [Script de extracción](scripts/powershell/09-extract-lab04-evidence-images.ps1)
 
-### BLOQUE 6 — Alertas, dashboards y evidencias
-
-Creación de template, items, triggers, dashboards y documentación final del laboratorio.
-
-## Estado actual
-
-- BLOQUE 0 completado.
-- BLOQUE 1 completado.
-- BLOQUE 2 completado.
-- BLOQUE 3 completado.
-- BLOQUE 4 completado.
-- BLOQUE 5 completado a nivel de scripts, UserParameters y validación con zabbix_get.
-- ORN-MON01 desplegado y operativo.
-- Zabbix Server 7.0.27 operativo.
-- Zabbix Agent 2 7.0.27 validado en nodos Windows.
-- Checks SQL custom validados desde ORN-MON01 contra ORN-SQL01 y ORN-SQL02.
-- Pendiente: template, items, triggers y dashboards en Zabbix UI.
+Las capturas seleccionadas se generan desde el documento técnico local del laboratorio y deben revisarse visualmente antes de publicarse.
 
 ## Documentación relacionada
 
-- monitorizacion-nativa.md
-- zabbix-server.md
-- zabbix-agents.md
-- sqlserver-monitoring.md
-- validaciones.md
-- scripts/README.md
-- scripts/sql/
-- scripts/powershell/
-- scripts/zabbix/
+| Documento | Contenido |
+|---|---|
+| [Monitorización nativa](monitorizacion-nativa.md) | Baseline Windows / SQL Server. |
+| [Zabbix Server](zabbix-server.md) | Despliegue y validación de ORN-MON01. |
+| [Zabbix Agents](zabbix-agents.md) | Instalación y validación de agentes. |
+| [SQL Server Monitoring](sqlserver-monitoring.md) | Checks SQL custom y validaciones. |
+| [Validaciones](validaciones.md) | Estado final validado. |
+| [Triggers SQL custom](scripts/zabbix/triggers-documentation.md) | Items, triggers y recuperación real. |
+| [Evidencias](evidencias/README.md) | Manifest y extracción de capturas. |
+| [Cierre documental](cierre-lab04.md) | Resumen final del laboratorio. |
+| [Troubleshooting](troubleshooting.md) | Incidencias y resolución. |
+| [Scripts](scripts/README.md) | Scripts SQL, PowerShell y Zabbix. |
 
-## Valor profesional
+## Estado de cierre
 
-Este laboratorio demuestra capacidad para validar un entorno SQL Server Always On antes de desplegar monitorización centralizada, combinando herramientas nativas, PowerShell, SQL DMVs, Windows Event Log, Zabbix Server, Zabbix Agent 2, UserParameters y checks SQL personalizados mediante Windows Authentication.
+LAB-04 queda cerrado como **Completado v1**.
+
+Mejoras futuras no bloqueantes:
+
+- Crear un dashboard visual específico para dirección/operación si se quiere una vista ejecutiva adicional.
+- Homogeneizar la cuenta del servicio Zabbix Agent 2 en ORN-SQL01 si se decide mantener el mismo modelo que ORN-SQL02.
+- Programar jobs AG-aware de backup si el laboratorio queda encendido de forma recurrente.
+- Ajustar triggers ruidosos del template Windows genérico si se quieren limpiar eventos no relacionados con SQL custom.

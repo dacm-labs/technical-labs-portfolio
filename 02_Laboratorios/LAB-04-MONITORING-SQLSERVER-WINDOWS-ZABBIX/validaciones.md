@@ -1,8 +1,8 @@
 # Validaciones LAB-04
 
-## Estado actual
+## Estado final
 
-Se valida la instalación base de ORN-MON01 como servidor centralizado de monitorización con Zabbix Server 7.0 LTS.
+Se valida el cierre del LAB-04 con Zabbix Server, frontend, agentes Windows, checks SQL custom, template reutilizable, items, triggers y recuperación real de una alerta SQL.
 
 ## ORN-MON01
 
@@ -16,23 +16,7 @@ Se valida la instalación base de ORN-MON01 como servidor centralizado de monito
 | open-vm-tools | Activo |
 | Root filesystem | 48 GB |
 | RAM | 2 GB asignados |
-| Snapshot base Ubuntu | Creado |
-| Snapshot Zabbix baseline | Creado |
-
-## Red
-
-| Interfaz | Uso | Estado |
-|---|---|---|
-| ens33 | NAT / Internet | DHCP activo |
-| ens37 | Red ORION | 10.10.20.70/24 |
-
-Validaciones realizadas:
-
-- Ping a `10.10.20.10`: correcto.
-- Resolución DNS de `ORN-DC01.orion.lab`: correcta.
-- Ping a Internet `8.8.8.8`: correcto.
-- Gateway por NAT mantenido en `ens33`.
-- Red interna ORION configurada en `ens37`.
+| IP interna | 10.10.20.70/24 |
 
 ## Zabbix Server
 
@@ -53,21 +37,13 @@ Versiones validadas:
 | Zabbix Agent | 7.0.27 |
 | Apache | 2.4.66 |
 
-## Puertos
+Puertos validados:
 
 | Puerto | Servicio |
-|---|---|
+|---:|---|
 | 80 | Apache / Zabbix Frontend |
 | 10050 | Zabbix Agent |
 | 10051 | Zabbix Server |
-
-## Frontend web
-
-Acceso validado desde ORN-DBA01:
-
-```text
-http://10.10.20.70/zabbix/
-```
 
 ## Monitorización completa del entorno Windows
 
@@ -89,7 +65,6 @@ Validaciones realizadas:
 - Conectividad hacia Zabbix Server `10.10.20.70:10051`.
 - Validación desde ORN-MON01 mediante `nc` y `zabbix_get`.
 - Hosts creados en Zabbix con plantilla `Windows by Zabbix agent`.
-- Disponibilidad ZBX en verde para los nodos principales del laboratorio.
 
 ## Checks SQL custom
 
@@ -107,25 +82,70 @@ Resultado:
 - Always On queda healthy en ambos nodos.
 - ORN-SQL01 queda validado como primary para `OrionLabDB`.
 - ORN-SQL02 queda validado como secondary para `OrionLabDB`.
+- SQL Server se mantiene alineado con Windows Authentication Only.
+- No se publican usuarios SQL ni contraseñas SQL.
 
-## Validación destacada ORN-FSW01
+## Template SQL custom
 
-```bash
-nc -vz 10.10.20.40 10050
-zabbix_get -s 10.10.20.40 -p 10050 -k agent.ping
-zabbix_get -s 10.10.20.40 -p 10050 -k agent.version
-zabbix_get -s 10.10.20.40 -p 10050 -k system.hostname
-```
+| Elemento | Resultado |
+|---|---|
+| Template | ORION SQL Server Custom Checks |
+| Hosts enlazados | ORN-SQL01, ORN-SQL02 |
+| Items custom por host | 10 |
+| Métricas SQL custom esperadas | 20 |
+| Export YAML | `scripts/zabbix/template-orion-sqlserver-custom.yaml` |
+| Latest data SQL | OK |
+| Latest data Always On | OK |
 
-Resultado:
+## Triggers SQL custom
+
+| Trigger | Severidad | Estado |
+|---|---|---|
+| SQL custom ping failed on `{HOST.NAME}` | High | Creado |
+| SQL Server service down on `{HOST.NAME}` | Disaster | Creado |
+| SQL Server Agent down on `{HOST.NAME}` | High | Creado |
+| Always On unhealthy on `{HOST.NAME}` | High | Creado |
+| SQL blocking sessions detected on `{HOST.NAME}` | Warning | Creado |
+| SQL Agent failed jobs detected on `{HOST.NAME}` | Average | Creado |
+| SQL FULL backup old for OrionLabDB on `{HOST.NAME}` | Average | Creado |
+| SQL LOG backup old for OrionLabDB on `{HOST.NAME}` | Average | Creado |
+
+## Validación real de alerta y recuperación
+
+Se valida el ciclo completo sobre el trigger:
 
 ```text
-Connection to 10.10.20.40 10050 port [tcp/zabbix-agent] succeeded
-1
-7.0.27
-ORN-FSW01
+SQL LOG backup old for OrionLabDB on ORN-SQL01
 ```
+
+Secuencia validada:
+
+1. Zabbix detecta LOG backup antiguo en el primario.
+2. El trigger salta solo en ORN-SQL01.
+3. ORN-SQL02 no alerta porque `is_primary[OrionLabDB]=0`.
+4. Se ejecuta backup LOG manual en ORN-SQL01.
+5. Zabbix recalcula el item.
+6. El valor de `SQL backup LOG age hours for OrionLabDB` baja a `0 h` en ORN-SQL01.
+7. El problema queda `RESOLVED`.
+8. El filtro `Problem: SQL` queda sin problemas activos.
+
+## Hallazgos no bloqueantes
+
+| Hallazgo | Estado | Decisión |
+|---|---|---|
+| Jobs AG-aware sin schedule detectado en preflight | Documentado | No bloquea el LAB-04; explica backups antiguos. |
+| Problemas genéricos Windows AppXSvc / InventorySvc | Documentado | No afectan a SQL custom; revisar si se quiere limpiar ruido. |
+| ORN-SQL01 recuperado temporalmente con LocalSystem para Agent 2 | Documentado | Checks OK; homogeneización futura opcional. |
+| Dashboard visual específico | Mejora futura | Latest data, Problems y evidencias cubren la validación v1. |
+
+## Evidencias
+
+El manifest de evidencias queda documentado en:
+
+- [evidencias/README.md](evidencias/README.md)
 
 ## Conclusión
 
-El entorno de monitorización queda validado con Zabbix Server, Zabbix Frontend, agentes Windows y checks SQL custom operativos. Queda pendiente crear el template reutilizable, items, triggers y dashboard en Zabbix UI.
+El entorno de monitorización queda validado con Zabbix Server, Zabbix Frontend, agentes Windows, template SQL custom, items, triggers y checks SQL operativos.
+
+LAB-04 queda cerrado como **Completado v1**.
