@@ -71,7 +71,7 @@ LAB-00 AÉGIDA → LAB-01 SQL Server DBA → LAB-02 Always On → LAB-03 Hardeni
 | [LAB-01 — SQL Server DBA Backup, Recovery, Security, Monitoring & Maintenance](02_Laboratorios/LAB-01-SQLSERVER-DBA-BACKUP-SECURITY) | Completado v1 | SQL Server / DBA / Seguridad / Monitorización | SQL Server 2025 en dominio con backup, restore, PITR, SQL Agent, Database Mail, alertas, mínimo privilegio, auditoría, Query Store y dashboard DBA. |
 | [LAB-02 — SQL Server Always On Availability Groups](02_Laboratorios/LAB-02-SQLSERVER-ALWAYS-ON-HADR) | Completado v1 | SQL Server / Alta disponibilidad / HA-DR | WSFC, File Share Witness, Availability Group, listener, failover, failback, lectura en secundaria, jobs AG-aware y validación final de continuidad. |
 | [LAB-03 — SQL Server Hardening, Audit & Compliance](02_Laboratorios/LAB-03-SQLSERVER-HARDENING-AUDIT-COMPLIANCE) | Completado v1 | SQL Server / Seguridad / Auditoría / Compliance | Hardening de SQL Server Always On, Windows-only, `sa` deshabilitado, auditoría de servidor y base de datos, trazabilidad y validación de mínimo privilegio con usuarios reales. |
-| [LAB-04 — Monitoring Stack for SQL Server & Windows](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX) | En curso avanzado | Monitorización / Operación / SQL Server | Zabbix Server 7.0 LTS, Zabbix Agent 2, monitorización Windows, checks SQL custom con UserParameters, Always On y validación desde ORN-MON01. |
+| [LAB-04 — Monitoring Stack for SQL Server & Windows](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX) | Completado v1 | Monitorización / Operación / SQL Server | Zabbix Server 7.0 LTS, Zabbix Agent 2, monitorización Windows, checks SQL custom, template reutilizable, items, triggers, alerta real recuperada y evidencias visuales. |
 
 ---
 
@@ -203,18 +203,27 @@ Incluye:
 - UserParameters para checks SQL custom.
 - Wrapper PowerShell para checks SQL Server mediante Windows Authentication.
 - Validación desde ORN-MON01 mediante `zabbix_get`.
-- Checks SQL custom para conectividad SQL, servicios, SQL Agent y Always On.
+- Template reutilizable `ORION SQL Server Custom Checks`.
+- 10 items SQL custom por nodo SQL.
+- 8 triggers SQL custom con lógica primary-only para backups en Always On.
+- Validación real de alerta `SQL LOG backup old` en ORN-SQL01.
+- Recuperación real tras backup LOG manual.
+- Export YAML del template y evidencias visuales publicadas.
 
 Documentación principal:
 
 | Documento | Contenido |
 |---|---|
-| [README del laboratorio](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/README.md) | Visión general y estado del laboratorio. |
+| [README del laboratorio](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/README.md) | Visión general, estado final, items, triggers y evidencias. |
 | [Monitorización nativa](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/monitorizacion-nativa.md) | Baseline Windows, SQL Server, PerfMon, DMVs y clúster. |
 | [Zabbix Server](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/zabbix-server.md) | Despliegue de ORN-MON01 y Zabbix Server. |
 | [Zabbix Agents](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/zabbix-agents.md) | Instalación y validación de agentes Windows. |
 | [SQL Server Monitoring](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/sqlserver-monitoring.md) | Checks SQL custom y validaciones contra SQL01/SQL02. |
-| [Validaciones](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/validaciones.md) | Estado validado de Zabbix, agentes y checks SQL. |
+| [Validaciones](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/validaciones.md) | Estado validado de Zabbix, agentes, checks SQL, items y triggers. |
+| [Triggers SQL custom](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/scripts/zabbix/triggers-documentation.md) | Documentación de triggers, lógica primary-only y recuperación real. |
+| [Evidencias](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/evidencias/README.md) | Capturas seleccionadas del cierre operativo. |
+| [Cierre documental](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/cierre-lab04.md) | Conclusión final y valor profesional del laboratorio. |
+| [Troubleshooting](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/troubleshooting.md) | Incidencias reales y decisiones operativas. |
 | [Scripts](02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX/scripts/README.md) | Scripts SQL, PowerShell y Zabbix. |
 
 ---
@@ -247,7 +256,7 @@ Documentación principal:
 | LAB-01 — SQL Server DBA | Completado v1 | Base DBA: instalación, backups, recovery, seguridad, jobs, auditoría y monitorización inicial. |
 | LAB-02 — SQL Server Always On HADR | Completado v1 | Alta disponibilidad con WSFC, listener, failover, failback y jobs AG-aware. |
 | LAB-03 — SQL Server Hardening, Audit & Compliance | Completado v1 | Endurecimiento, auditoría, trazabilidad, mínimo privilegio y checklist de cumplimiento sobre Always On. |
-| LAB-04 — Monitoring Stack for SQL Server & Windows | En curso avanzado | Zabbix Server, agentes Windows, checks SQL custom, UserParameters y validación desde ORN-MON01. |
+| LAB-04 — Monitoring Stack for SQL Server & Windows | Completado v1 | Zabbix Server, agentes Windows, checks SQL custom, template, items, triggers, alerta real, recuperación y evidencias. |
 
 ### Próximos laboratorios previstos
 
