@@ -10,7 +10,7 @@ zabbix_export:
       description: |
         Custom SQL Server and Always On checks for LAB-04.
         Uses Zabbix Agent 2 UserParameters and PowerShell wrapper.
-        Validated from ORN-MON01 against ORN-SQL01 and ORN-SQL02.s
+        Validated from ORN-MON01 against ORN-SQL01 and ORN-SQL02.
       groups:
         - name: Templates/Databases
       items:
