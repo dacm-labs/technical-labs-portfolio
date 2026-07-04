@@ -15,6 +15,7 @@ Los scripts se dividen en tres bloques:
 - `01-install-zabbix-agent2-windows.ps1`: instalación y configuración base de Zabbix Agent 2 en Windows.
 - `02-check-sql-services.ps1`: validación de servicios `MSSQLSERVER` y `SQLSERVERAGENT`.
 - `03-check-sql-dmv.ps1`: wrapper para checks SQL custom ejecutados por Zabbix Agent 2.
+- `04-test-zabbix-connectivity.ps1`: validación de conectividad desde nodos Windows hacia ORN-MON01.
 - `05-create-perfmon-baseline-collector.ps1`: creación de Data Collector Set de PerfMon con logman.
 - `06-check-windows-critical-events.ps1`: revisión de eventos críticos, errores y warnings del log System.
 - `07-check-cluster-dns-health.ps1`: validación de clúster, DNS y canal seguro de dominio.
