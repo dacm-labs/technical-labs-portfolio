@@ -20,17 +20,15 @@ El firewall **AEGIDA-PF-FW**, basado en pfSense, actúa como núcleo de segmenta
 
 ## 2. Principios de diseño
 
-La arquitectura se basa en los siguientes principios:
-
 | Principio | Aplicación en AÉGIDA |
 |---|---|
-| Segmentación | Separación de redes por función y criticidad |
-| Mínimo privilegio | Solo se permiten flujos necesarios y justificados |
-| Defensa en profundidad | Firewall, AD, GPOs, PAW, Wazuh y validaciones defensivas |
-| Administración segura | Gestión centralizada desde AEGIDA-PAW01 |
-| Visibilidad | Monitorización mediante Wazuh, logs y evidencias |
-| Trazabilidad | Documentación de pruebas, incidencias y decisiones |
-| Contención | RED-KALI no tiene acceso libre a segmentos críticos |
+| Segmentación | Separación de redes por función y criticidad. |
+| Mínimo privilegio | Solo se permiten flujos necesarios y justificados. |
+| Defensa en profundidad | Firewall, AD, GPOs, PAW, Wazuh y validaciones defensivas. |
+| Administración segura | Gestión centralizada desde AEGIDA-PAW01. |
+| Visibilidad | Monitorización mediante Wazuh, logs y evidencias. |
+| Trazabilidad | Documentación de pruebas, incidencias y decisiones. |
+| Contención | RED-KALI no tiene acceso libre a segmentos críticos. |
 
 ---
 
@@ -38,14 +36,14 @@ La arquitectura se basa en los siguientes principios:
 
 | Zona | Subred | Gateway | Función |
 |---|---:|---:|---|
-| WAN | 192.168.139.0/24 | DHCP VMware NAT | Salida exterior del firewall |
-| DMZ | 192.168.10.0/24 | 192.168.10.1 | Servicio web controlado |
-| MGMT | 192.168.20.0/24 | 192.168.20.1 | Administración segura |
-| TIER0 | 192.168.30.0/24 | 192.168.30.1 | Controlador de dominio y DNS |
-| SOC | 192.168.40.0/24 | 192.168.40.1 | Wazuh/SIEM |
-| OT | 192.168.50.0/24 | 192.168.50.1 | PLC/HMI simulados |
-| TRANSIT-LAB | 192.168.60.0/24 | 192.168.60.1 / 192.168.60.2 | Enlace entre host principal y secundario |
-| RED-KALI | 192.168.70.0/24 | 192.168.70.1 | Red atacante controlada |
+| WAN | 192.168.139.0/24 | DHCP VMware NAT | Salida exterior del firewall. |
+| DMZ | 192.168.10.0/24 | 192.168.10.1 | Servicio web controlado. |
+| MGMT | 192.168.20.0/24 | 192.168.20.1 | Administración segura. |
+| TIER0 | 192.168.30.0/24 | 192.168.30.1 | Controlador de dominio y DNS. |
+| SOC | 192.168.40.0/24 | 192.168.40.1 | Wazuh/SIEM. |
+| OT | 192.168.50.0/24 | 192.168.50.1 | PLC/HMI simulados. |
+| TRANSIT-LAB | 192.168.60.0/24 | 192.168.60.1 / 192.168.60.2 | Enlace entre host principal y secundario. |
+| RED-KALI | 192.168.70.0/24 | 192.168.70.1 | Red atacante controlada. |
 
 ---
 
@@ -68,7 +66,7 @@ La arquitectura se basa en los siguientes principios:
 
 | Máquina | Sistema / rol | Red | IP |
 |---|---|---|---:|
-| AEGIDA-PF-FW | pfSense / firewall central | Varias | Gateways de cada segmento |
+| AEGIDA-PF-FW | pfSense / firewall central | Varias | Gateways de cada segmento. |
 | AEGIDA-DC01 | Windows Server 2022 / AD DS + DNS | TIER0 | 192.168.30.10 |
 | AEGIDA-PAW01 | Windows 11 Pro / PAW | MGMT | 192.168.20.10 |
 | AEGIDA-SRV-DMZ01 | Ubuntu Server / Nginx | DMZ | 192.168.10.10 |
@@ -79,7 +77,84 @@ La arquitectura se basa en los siguientes principios:
 
 ---
 
-## 6. Firewall central: AEGIDA-PF-FW
+## 6. Diagrama lógico en imagen
+
+![Topología lógica global de AÉGIDA](diagramas/01-topologia-logica-global.png)
+
+El diagrama lógico resume las zonas de red principales, el firewall central pfSense y los segmentos defensivos del laboratorio.
+
+---
+
+## 7. Esquema lógico Mermaid
+
+```mermaid
+flowchart TB
+    WAN["WAN / Internet\nVMnet8 NAT\n192.168.139.0/24"]
+    FW["AEGIDA-PF-FW\npfSense\nFirewall central / gateways"]
+
+    subgraph DMZ["DMZ - 192.168.10.0/24"]
+        DMZ01["AEGIDA-SRV-DMZ01\nUbuntu / Nginx\n192.168.10.10"]
+    end
+
+    subgraph MGMT["MGMT - 192.168.20.0/24"]
+        PAW["AEGIDA-PAW01\nPAW / RSAT / Admin\n192.168.20.10"]
+    end
+
+    subgraph TIER0["TIER0 - 192.168.30.0/24"]
+        DC["AEGIDA-DC01\nAD DS / DNS\n192.168.30.10"]
+    end
+
+    subgraph SOC["SOC - 192.168.40.0/24"]
+        WAZUH["AEGIDA-SOC-WAZUH01\nWazuh all-in-one\n192.168.40.10"]
+    end
+
+    subgraph TRANSIT["TRANSIT-LAB - 192.168.60.0/24"]
+        TRANSITGW["Host secundario / next hop\n192.168.60.2"]
+    end
+
+    subgraph OT["OT simulada - 192.168.50.0/24"]
+        PLC["AEGIDA-OT-PLC01\nPLC simulado\n192.168.50.20"]
+        HMI["AEGIDA-OT-HMI01\nHMI simulada\n192.168.50.30"]
+    end
+
+    subgraph KALI["RED-KALI - 192.168.70.0/24"]
+        REDKALI["AEGIDA-RED-KALI01\nKali / pruebas controladas\n192.168.70.50"]
+    end
+
+    WAN --> FW
+    FW --> DMZ01
+    FW --> PAW
+    FW --> DC
+    FW --> WAZUH
+    FW --> TRANSITGW
+    TRANSITGW --> PLC
+    TRANSITGW --> HMI
+    FW --> REDKALI
+
+    PAW -->|Administración autorizada| FW
+    PAW -->|RSAT / DNS / GPO| DC
+    PAW -->|SSH / HTTP| DMZ01
+    PAW -->|Wazuh web / SSH| WAZUH
+    PAW -->|Admin controlada| PLC
+    PAW -->|Admin controlada| HMI
+
+    DMZ01 -->|DNS limitado| DC
+    DMZ01 -->|Agente Wazuh| WAZUH
+    DC -->|Agente Wazuh| WAZUH
+    PAW -->|Agente Wazuh| WAZUH
+    PLC -->|Agente Wazuh| WAZUH
+    HMI -->|Agente Wazuh| WAZUH
+
+    REDKALI -. "Bloqueado / filtrado" .-> TIER0
+    REDKALI -. "Bloqueado / filtrado" .-> MGMT
+    REDKALI -. "Bloqueado / filtrado" .-> SOC
+    REDKALI -. "Bloqueado / filtrado" .-> OT
+    REDKALI -->|Pruebas controladas| DMZ01
+```
+
+---
+
+## 8. Firewall central: AEGIDA-PF-FW
 
 AEGIDA-PF-FW es el componente principal de control de tráfico del laboratorio.
 
@@ -109,36 +184,26 @@ Nota: el entorno OT se alcanza como red remota mediante ruta estática, no como 
 
 ---
 
-## 7. Ruta hacia OT remoto
+## 9. Ruta hacia OT remoto
 
 El entorno OT se aloja en un host secundario para reducir carga sobre el host principal.
-
-La red OT utiliza la subred:
-
-```text
-192.168.50.0/24
-```
-
-El firewall pfSense alcanza dicha red mediante el enlace TRANSIT-LAB:
 
 ```text
 Ruta estática en pfSense:
 192.168.50.0/24 vía 192.168.60.2
 ```
 
-Elementos relevantes:
-
 | Elemento | IP / red | Función |
 |---|---:|---|
-| pfSense TRANSITLAB | 192.168.60.1 | Extremo firewall del tránsito |
-| Host secundario | 192.168.60.2 | Siguiente salto hacia OT |
-| OT | 192.168.50.0/24 | Red industrial simulada |
-| PLC01 | 192.168.50.20 | Activo industrial simulado |
-| HMI01 | 192.168.50.30 | Interfaz de supervisión simulada |
+| pfSense TRANSITLAB | 192.168.60.1 | Extremo firewall del tránsito. |
+| Host secundario | 192.168.60.2 | Siguiente salto hacia OT. |
+| OT | 192.168.50.0/24 | Red industrial simulada. |
+| PLC01 | 192.168.50.20 | Activo industrial simulado. |
+| HMI01 | 192.168.50.30 | Interfaz de supervisión simulada. |
 
 ---
 
-## 8. Modelo de identidad: Active Directory / TIER0
+## 10. Modelo de identidad: Active Directory / TIER0
 
 El dominio del laboratorio es:
 
@@ -162,11 +227,9 @@ Funciones principales:
 - Base para aplicación de GPOs.
 - Protección del ámbito Tier 0.
 
-El segmento TIER0 se reserva para activos críticos de identidad y administración privilegiada.
-
 ---
 
-## 9. Administración segura: PAW
+## 11. Administración segura: PAW
 
 La máquina **AEGIDA-PAW01** actúa como estación privilegiada de administración.
 
@@ -189,7 +252,7 @@ La administración desde RED-KALI queda bloqueada o filtrada.
 
 ---
 
-## 10. DMZ
+## 12. DMZ
 
 La DMZ aloja el servidor:
 
@@ -209,7 +272,7 @@ La DMZ no tiene acceso libre a segmentos críticos. Sus comunicaciones se limita
 
 ---
 
-## 11. SOC / Wazuh
+## 13. SOC / Wazuh
 
 El nodo de monitorización es:
 
@@ -231,24 +294,22 @@ Agentes integrados:
 
 | Agente | Función |
 |---|---|
-| AEGIDA-SRV-DMZ01 | Servidor DMZ |
-| AEGIDA-DC01 | Controlador de dominio |
-| AEGIDA-PAW01 | Estación privilegiada |
-| AEGIDA-OT-PLC01 | PLC simulado |
-| AEGIDA-OT-HMI01 | HMI simulada |
+| AEGIDA-SRV-DMZ01 | Servidor DMZ. |
+| AEGIDA-DC01 | Controlador de dominio. |
+| AEGIDA-PAW01 | Estación privilegiada. |
+| AEGIDA-OT-PLC01 | PLC simulado. |
+| AEGIDA-OT-HMI01 | HMI simulada. |
 
 ---
 
-## 12. Entorno OT simulado
+## 14. Entorno OT simulado
 
 El entorno OT representa una pequeña red industrial simulada.
 
-Componentes:
-
 | Máquina | IP | Función |
 |---|---:|---|
-| AEGIDA-OT-PLC01 | 192.168.50.20 | PLC simulado |
-| AEGIDA-OT-HMI01 | 192.168.50.30 | HMI simulada |
+| AEGIDA-OT-PLC01 | 192.168.50.20 | PLC simulado. |
+| AEGIDA-OT-HMI01 | 192.168.50.30 | HMI simulada. |
 
 Características:
 
@@ -258,21 +319,15 @@ Características:
 - Acceso administrativo controlado desde PAW.
 - Monitorización mediante Wazuh.
 - Servicios web Nginx para simular paneles de estado.
-- Pruebas FIM sobre ficheros web monitorizados.
 
 ---
 
-## 13. RED-KALI
+## 15. RED-KALI
 
 La red atacante controlada es:
 
 ```text
 RED-KALI — 192.168.70.0/24
-```
-
-Máquina principal:
-
-```text
 AEGIDA-RED-KALI01 — 192.168.70.50
 ```
 
@@ -288,59 +343,49 @@ RED-KALI no representa una red de administración ni una red interna confiable.
 
 ---
 
-## 14. Flujos permitidos principales
+## 16. Flujos permitidos principales
 
 | Origen | Destino | Servicio | Justificación |
 |---|---|---|---|
-| PAW01 | pfSense | HTTPS / SSH | Administración del firewall |
-| PAW01 | DC01 | DNS / RSAT / administración | Gestión del dominio |
-| PAW01 | Wazuh | HTTPS / SSH | Administración SOC |
-| PAW01 | DMZ01 | SSH / HTTP | Administración y validación del servicio |
-| PAW01 | PLC01 / HMI01 | SSH / HTTP | Administración OT controlada |
-| Agentes Wazuh | Wazuh Manager | Puertos Wazuh | Monitorización |
-| DC01 | Internet | DNS/HTTP/HTTPS según reglas | Reenviadores y actualizaciones |
-| DMZ01 | DC01 | DNS | Resolución interna |
-| OT | Wazuh | Comunicación agente-manager | Monitorización de activos OT |
+| PAW01 | pfSense | HTTPS / SSH | Administración del firewall. |
+| PAW01 | DC01 | DNS / RSAT / administración | Gestión del dominio. |
+| PAW01 | Wazuh | HTTPS / SSH | Administración SOC. |
+| PAW01 | DMZ01 | SSH / HTTP | Administración y validación del servicio. |
+| PAW01 | PLC01 / HMI01 | SSH / HTTP | Administración OT controlada. |
+| Agentes Wazuh | Wazuh Manager | Puertos Wazuh | Monitorización. |
+| DC01 | Internet | DNS/HTTP/HTTPS según reglas | Reenviadores y actualizaciones. |
+| DMZ01 | DC01 | DNS | Resolución interna. |
+| OT | Wazuh | Comunicación agente-manager | Monitorización de activos OT. |
 
 ---
 
-## 15. Flujos bloqueados o restringidos
+## 17. Flujos bloqueados o restringidos
 
 | Origen | Destino | Resultado esperado |
 |---|---|---|
-| RED-KALI | TIER0/DC01 | Bloqueado o filtrado |
-| RED-KALI | SOC/Wazuh | Bloqueado o filtrado |
-| RED-KALI | MGMT/PAW01 | Bloqueado o filtrado |
-| RED-KALI | OT/PLC-HMI | Bloqueado o filtrado |
-| DMZ | TIER0 sin regla explícita | Bloqueado |
-| OT | Segmentos no necesarios | Restringido |
-| Clientes no autorizados | Plano de administración | Bloqueado |
+| RED-KALI | TIER0/DC01 | Bloqueado o filtrado. |
+| RED-KALI | SOC/Wazuh | Bloqueado o filtrado. |
+| RED-KALI | MGMT/PAW01 | Bloqueado o filtrado. |
+| RED-KALI | OT/PLC-HMI | Bloqueado o filtrado. |
+| DMZ | TIER0 sin regla explícita | Bloqueado. |
+| OT | Segmentos no necesarios | Restringido. |
+| Clientes no autorizados | Plano de administración | Bloqueado. |
 
 ---
 
-## 16. Escenarios de validación defensiva
-
-Se validaron cinco escenarios principales:
+## 18. Escenarios de validación defensiva
 
 | Escenario | Objetivo |
 |---|---|
-| Reconocimiento web contra DMZ | Comprobar acceso controlado y visibilidad |
-| Movimiento lateral hacia OT | Validar aislamiento del entorno industrial |
-| Acceso hacia TIER0/DC01 | Proteger servicios críticos de identidad |
-| Acceso hacia SOC/Wazuh | Proteger la plataforma de monitorización |
-| Acceso hacia PAW01 | Proteger el plano de administración |
+| Reconocimiento web contra DMZ | Comprobar acceso controlado y visibilidad. |
+| Movimiento lateral hacia OT | Validar aislamiento del entorno industrial. |
+| Acceso hacia TIER0/DC01 | Proteger servicios críticos de identidad. |
+| Acceso hacia SOC/Wazuh | Proteger la plataforma de monitorización. |
+| Acceso hacia PAW01 | Proteger el plano de administración. |
 
 ---
 
-## 17. Diagrama lógico
-
-![Topología lógica global de AÉGIDA](diagramas/01-topologia-logica-global.png)
-
-El diagrama lógico resume las zonas de red principales, el firewall central pfSense y los segmentos defensivos del laboratorio.
-
----
-
-## 18. Limitaciones conocidas
+## 19. Limitaciones conocidas
 
 El laboratorio fue construido sobre recursos propios y virtualización local, por lo que presenta limitaciones razonables:
 
@@ -352,6 +397,3 @@ El laboratorio fue construido sobre recursos propios y virtualización local, po
 - No se implementa EDR corporativo.
 - No se dispone de certificados públicos.
 - Las copias y recuperación quedan planteadas como mejora futura.
-
----
-
