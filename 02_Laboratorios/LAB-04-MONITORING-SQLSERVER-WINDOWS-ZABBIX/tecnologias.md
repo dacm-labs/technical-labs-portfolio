@@ -11,7 +11,7 @@ Documentar el stack técnico utilizado para desplegar la monitorización central
 | VMware Workstation | Virtualización local del laboratorio. |
 | Windows Server | Controlador de dominio, SQL Server, File Share Witness y nodos monitorizados. |
 | Windows 11 / ORN-DBA01 | Estación administrativa para SSMS, navegador, PowerShell y validaciones. |
-| Ubuntu Server 24.04 LTS | Sistema operativo de ORN-MON01. |
+| Ubuntu Server 26.04 LTS | Sistema operativo de ORN-MON01. |
 | open-vm-tools | Integración VMware en ORN-MON01. |
 
 ## Monitorización centralizada
