@@ -23,11 +23,54 @@ El entorno se basa en un dominio Windows llamado `orion.lab`, con separación cl
 - Administración centralizada desde estación DBA.
 - Resolución interna mediante DNS del controlador de dominio.
 
-## Flujo de administración
+## Flujo de administración en imagen
 
 ![Flujo de administración LAB-01](diagramas/lab01_flujo_de_administracion.png)
 
-El flujo representa la relación operativa entre la estación administrativa `ORN-DBA01`, el servidor SQL `ORN-SQL01` y el controlador de dominio `ORN-DC01`.
+## Esquema lógico Mermaid
+
+```mermaid
+flowchart LR
+    subgraph DOMAIN["Dominio orion.lab - 10.10.20.0/24"]
+        DC["ORN-DC01\nDomain Controller / DNS\n10.10.20.10"]
+        SQL["ORN-SQL01\nSQL Server 2025 Developer\n10.10.20.20"]
+        DBA["ORN-DBA01\nDBA Workstation\nSSMS / PowerShell\n10.10.20.30"]
+    end
+
+    subgraph SQLDATA["Almacenamiento SQL Server"]
+        DATA["D:/SQLData\nData files"]
+        LOGS["E:/SQLLogs\nTransaction logs"]
+        BCK["F:/SQLBackups\nBackups"]
+        TEMP["TempDB dedicada\n4 data files"]
+    end
+
+    subgraph OPS["Operación DBA"]
+        AGENT["SQL Server Agent\nJobs / schedules"]
+        MAIL["Database Mail\nOperador DBA"]
+        AUDIT["SQL Server Audit\nEventos auditados"]
+        QS["Query Store\nDiagnóstico de consultas"]
+        DASH["Dashboard DBA\nEstado operativo"]
+    end
+
+    DBA -->|SSMS / T-SQL / PowerShell| SQL
+    DBA -->|RSAT / DNS / AD| DC
+    SQL -->|Kerberos / grupos AD| DC
+
+    SQL --> DATA
+    SQL --> LOGS
+    SQL --> TEMP
+    SQL -->|FULL / DIFF / LOG| BCK
+
+    SQL --> AGENT
+    AGENT -->|Backups / CHECKDB / cleanup| BCK
+    AGENT --> MAIL
+    SQL --> AUDIT
+    SQL --> QS
+    DBA --> DASH
+    DASH --> SQL
+```
+
+El esquema representa la relación operativa entre la estación administrativa `ORN-DBA01`, el servidor SQL `ORN-SQL01` y el controlador de dominio `ORN-DC01`.
 
 - `ORN-DBA01` actúa como estación de administración DBA.
 - `ORN-SQL01` centraliza bases SQL, jobs, backups y alertas.
@@ -76,4 +119,3 @@ El LAB-01 queda preparado como base para futuras ampliaciones del portfolio téc
 3. Always On Availability Groups.
 4. Monitorización centralizada.
 5. Integración con laboratorios de ciberseguridad defensiva.
-
