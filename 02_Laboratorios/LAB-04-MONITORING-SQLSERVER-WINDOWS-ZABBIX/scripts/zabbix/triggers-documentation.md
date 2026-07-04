@@ -18,9 +18,10 @@ El objetivo es detectar fallos relevantes de operación SQL Server sin generar f
 | Hosts SQL monitorizados | ORN-SQL01, ORN-SQL02 |
 | SQL Server | SQL Server 2025 Developer |
 | Base validada | OrionLabDB |
-| Availability Group | ORION-AG01 |
+| Availability Group | ORION_AG01 |
 | Template Zabbix | ORION SQL Server Custom Checks |
-| Cuenta del servicio Zabbix Agent 2 | ORION\svc_zbx_sqlmon |
+| Cuenta técnica objetivo | ORION\svc_zbx_sqlmon |
+| Excepción documentada | ORN-SQL01 validado temporalmente con LocalSystem para mantener estabilidad. |
 | Puerto Agent | 10050 |
 
 ## Items SQL custom usados
@@ -148,7 +149,7 @@ Queda validado que el template ORION SQL Server Custom Checks no solo recoge mé
 La validación demuestra:
 
 - Monitorización SQL custom mediante Zabbix Agent 2.
-- Ejecución homogénea de agentes con cuenta de dominio ORION\svc_zbx_sqlmon.
+- Diseño preparado para Windows Authentication y cuenta técnica de dominio, con excepción documentada en ORN-SQL01.
 - Detección de estado SQL Server y SQL Server Agent.
 - Detección de salud Always On.
 - Detección de bloqueos SQL.
