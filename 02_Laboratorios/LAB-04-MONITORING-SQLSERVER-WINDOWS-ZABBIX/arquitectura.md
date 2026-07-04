@@ -8,33 +8,9 @@ LAB-04 reutiliza la plataforma construida en LAB-01, LAB-02 y LAB-03, incorporan
 
 ## Vista lógica
 
-```mermaid
-flowchart LR
-    DBA["ORN-DBA01<br/>DBA workstation<br/>10.10.20.30"]
-    MON["ORN-MON01<br/>Zabbix Server 7.0 LTS<br/>10.10.20.70"]
-    DC["ORN-DC01<br/>AD DS / DNS<br/>10.10.20.10"]
-    SQL1["ORN-SQL01<br/>SQL Server primary<br/>10.10.20.20"]
-    SQL2["ORN-SQL02<br/>SQL Server secondary<br/>10.10.20.21"]
-    FSW["ORN-FSW01<br/>File Share Witness<br/>10.10.20.40"]
-    AG["ORN-SQLAG01<br/>Always On Listener<br/>10.10.20.60"]
-    CL["ORN-SQLCL01<br/>WSFC Cluster Name<br/>10.10.20.50"]
+La siguiente imagen muestra la arquitectura lógica final del LAB-04, incluyendo Zabbix Server, Zabbix Agent 2, nodos Windows, SQL Server Always On, listener, File Share Witness, WSFC, métricas, alertas y dashboards.
 
-    DBA -->|HTTP 80| MON
-    MON -->|Zabbix Agent TCP 10050| DC
-    MON -->|Zabbix Agent TCP 10050| SQL1
-    MON -->|Zabbix Agent TCP 10050| SQL2
-    MON -->|Zabbix Agent TCP 10050| FSW
-    MON -->|Zabbix Agent TCP 10050| DBA
-
-    SQL1 <-->|HADR endpoint 5022| SQL2
-    SQL1 --> AG
-    SQL2 --> AG
-    SQL1 -. WSFC .- CL
-    SQL2 -. WSFC .- CL
-    FSW -. Quorum .- CL
-    DC -. DNS / Kerberos / LDAP .- SQL1
-    DC -. DNS / Kerberos / LDAP .- SQL2
-```
+![Diagrama de arquitectura LAB-04](diagramas/lab04_diagrama_de_arquitectura.png)
 
 ## Componentes principales
 
