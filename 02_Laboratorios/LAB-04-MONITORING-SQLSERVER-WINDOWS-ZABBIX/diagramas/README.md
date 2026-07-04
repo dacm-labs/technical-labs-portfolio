@@ -2,37 +2,30 @@
 
 ## Estado
 
-La arquitectura lógica del LAB-04 se documenta actualmente en Markdown mediante Mermaid dentro de:
+La carpeta `diagramas/` contiene los recursos visuales finales del LAB-04 publicados junto con la documentación técnica del laboratorio.
 
-```text
-../arquitectura.md
-```
+## Diagramas publicados
 
-No se publica de momento una imagen PNG/SVG independiente de arquitectura.
+| Fichero | Uso |
+|---|---|
+| `lab04_cover.png` | Portada visual del LAB-04, enlazada desde `../README.md`. |
+| `lab04_diagrama_de_arquitectura.png` | Diagrama de arquitectura lógica, enlazado desde `../arquitectura.md`. |
 
-## Decisión
+## Criterio de publicación
 
-Para evitar diagramas duplicados o imágenes vacías, la versión v1 utiliza un diagrama Mermaid mantenible directamente en Git.
-
-Ventajas:
-
-- Se versiona como texto.
-- Es fácil de revisar en GitHub.
-- No requiere regenerar una imagen en cada cambio.
-- Evita binarios innecesarios.
+- La portada resume visualmente el objetivo del laboratorio: monitorización centralizada de SQL Server y Windows con Zabbix.
+- El diagrama de arquitectura documenta el flujo principal entre Zabbix Server, Zabbix Agent 2, nodos Windows, SQL Server Always On, listener, WSFC y File Share Witness.
+- Los binarios publicados se limitan a imágenes finales útiles para GitHub y portfolio.
+- Las evidencias operativas detalladas permanecen en `../evidencias/images/`.
 
 ## Recursos relacionados
 
 | Recurso | Contenido |
 |---|---|
-| [../arquitectura.md](../arquitectura.md) | Diagrama lógico, red, flujos y autenticación. |
-| [../README.md](../README.md) | Resumen del laboratorio y documentación principal. |
+| [../README.md](../README.md) | Resumen del laboratorio y portada. |
+| [../arquitectura.md](../arquitectura.md) | Arquitectura lógica final. |
 | [../evidencias/README.md](../evidencias/README.md) | Evidencias visuales finales del laboratorio. |
-
-## Mejora futura
-
-Si se quiere una presentación más visual para LinkedIn/CV o documentación PDF, se puede generar una imagen de arquitectura limpia a partir del diagrama Mermaid.
 
 ## Conclusión
 
-La carpeta queda como reserva estructural. En LAB-04 v1, la arquitectura válida está documentada como Mermaid en `arquitectura.md`.
+LAB-04 queda documentado con una portada visual y un diagrama de arquitectura final, manteniendo separadas las imágenes de presentación y las evidencias técnicas operativas.
