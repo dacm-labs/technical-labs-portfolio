@@ -1,5 +1,7 @@
 # LAB-04 — Monitoring Stack for SQL Server & Windows
 
+![LAB-04 — Monitoring Stack for SQL Server & Windows](diagramas/lab04_cover.png)
+
 ## Objetivo
 
 Implementar un stack de monitorización centralizada para SQL Server, Windows Server y Always On Availability Groups, partiendo de una validación nativa del entorno y evolucionando hacia Zabbix Server con checks SQL custom, items, triggers y evidencias reproducibles.
@@ -102,10 +104,11 @@ last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1
 
 Esto evita que ORN-SQL02, como réplica secundaria, genere alertas por antigüedad de backups cuando el control operativo se valida en el primario.
 
-## Evidencias
+## Diagramas y evidencias
 
-El manifest y el script de extracción de evidencias se encuentran en:
+Los diagramas finales y las evidencias seleccionadas se encuentran en:
 
+- [Diagramas LAB-04](diagramas/README.md)
 - [Evidencias LAB-04](evidencias/README.md)
 - [Manifest de capturas](evidencias/manifest.md)
 - [Script de extracción](scripts/powershell/09-extract-lab04-evidence-images.ps1)
