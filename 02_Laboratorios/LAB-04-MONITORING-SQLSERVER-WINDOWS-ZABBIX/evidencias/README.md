@@ -8,10 +8,18 @@ Las capturas se seleccionan desde el documento técnico del laboratorio y se pub
 
 ## Estado
 
+- Diagramas finales: `../diagramas/`.
 - Manifest de capturas seleccionadas: `manifest.md`.
-- Carpeta de imágenes: `images/`.
-- Total de imágenes publicadas: 15.
-- Formato publicado: `.jpg`.
+- Carpeta de imágenes de evidencias: `images/`.
+- Total de imágenes de evidencias publicadas: 15.
+- Formato publicado de evidencias: `.jpg`.
+
+## Diagramas publicados
+
+| Nº | Fichero | Qué demuestra |
+|---:|---|---|
+| 0 | `../diagramas/lab04_cover.png` | Portada visual del LAB-04. |
+| 1 | `../diagramas/lab04_diagrama_de_arquitectura.png` | Arquitectura lógica del stack de monitorización. |
 
 ## Evidencias principales
 
@@ -39,6 +47,7 @@ Las capturas se seleccionan desde el documento técnico del laboratorio y se pub
 - No publicar cookies de sesión ni tokens.
 - Excluir capturas con credenciales visibles.
 - Mantener trazabilidad entre documento técnico, manifest y Git.
+- Separar diagramas de presentación (`diagramas/`) y evidencias operativas (`evidencias/images/`).
 
 ## Resultado
 
