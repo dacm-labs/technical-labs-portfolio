@@ -82,6 +82,10 @@ Detalle completo: [arquitectura.md](arquitectura.md).
 | Auditoría de base | Activa sobre `lab.Clientes` |
 | Mínimo privilegio | Validado con usuarios reales |
 
+![Snapshot final de cumplimiento en SQL01](capturas/06-validacion-final/fin-01-final-snapshot-sql01.png)
+
+![Snapshot final de cumplimiento en SQL02](capturas/06-validacion-final/fin-02-final-snapshot-sql02.png)
+
 ---
 
 ## Controles aplicados
@@ -114,6 +118,32 @@ Detalle completo: [arquitectura.md](arquitectura.md).
 - Validación de auditoría en réplica secundaria read-only.
 - Pruebas reales de permisos con `usr_sql_readonly`, `usr_sql_audit` y `usr_sql_backupop`.
 - Snapshot final de cumplimiento en ambos nodos.
+
+---
+
+## Evidencias visuales clave
+
+### Preflight y estado HADR
+
+![Estado general del Availability Group](capturas/01-preflight-baseline/ag-01-availability-group-health.png)
+
+![Base OrionLabDB sincronizada dentro del AG](capturas/01-preflight-baseline/ag-02-orionlabdb-synchronized.png)
+
+### Baseline y hardening
+
+![Hallazgo inicial: sa habilitado en SQL02](capturas/02-security-baseline/sec-01-sql02-sa-enabled-baseline.png)
+
+![Validación post-hardening en SQL02](capturas/03-surface-area/hrd-02-sql02-post-hardening.png)
+
+### Auditoría y mínimo privilegio
+
+![Database Audit Specification sobre lab.Clientes](capturas/05-auditoria/aud-04-database-audit-spec.png)
+
+![Eventos auditados sobre lab.Clientes en SQL01](capturas/05-auditoria/aud-05-events-lab-clientes-sql01.png)
+
+![Validación de mínimo privilegio: usuario readonly](capturas/04-logins-roles-permissions/priv-01-readonly-user-validation.png)
+
+Galería completa: [evidencias.md](evidencias.md).
 
 ---
 
