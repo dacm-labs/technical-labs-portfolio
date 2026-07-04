@@ -44,6 +44,8 @@ Forma parte de un **portfolio técnico documentado** orientado a sistemas, infra
 | TRANSIT-LAB | `192.168.60.0/24` | Enlace hacia entorno OT remoto. |
 | RED-KALI | `192.168.70.0/24` | Red no confiable para validaciones controladas. |
 
+![Topología lógica global](diagramas/01-topologia-logica-global.png)
+
 ---
 
 ## Componentes principales
@@ -63,18 +65,25 @@ Forma parte de un **portfolio técnico documentado** orientado a sistemas, infra
 
 ## Evidencias destacadas
 
-- Topología lógica global.
-- Segmentación VMware por VMnet.
-- pfSense como firewall central.
-- Active Directory y modelo Tier 0.
-- PAW como estación de administración segura.
-- GPOs y hardening básico.
-- Nginx en DMZ.
-- Validación DNS.
-- Wazuh con agentes activos.
-- FIM en activos OT.
-- Bloqueo de RED-KALI hacia OT.
-- Playbook básico SOC.
+### Segmentación y firewall
+
+![pfSense como núcleo de segmentación](diagramas/03-pfsense-segmentacion.png)
+
+### Identidad y administración segura
+
+![Active Directory y modelo Tier 0](diagramas/04-active-directory-tier0.png)
+
+![PAW como estación de administración segura](diagramas/05-paw-administracion-segura.png)
+
+### Servicios y monitorización defensiva
+
+![Servicio Nginx en DMZ](capturas/dmz/nginx-dmz01.png)
+
+![Wazuh con agentes activos](capturas/wazuh/dashboard-agentes-activos.png)
+
+### Validación defensiva
+
+![Aislamiento OT validado desde RED-KALI](capturas/kali/bloqueo-ot.png)
 
 Galería completa: [evidencias.md](evidencias.md).
 
