@@ -144,6 +144,7 @@ Relación de capturas: [evidencias.md](evidencias.md).
 | Documento | Contenido |
 |---|---|
 | [Arquitectura](arquitectura.md) | Diseño final de nodos, red, quorum, listener y flujo HA. |
+| [Esquema lógico Mermaid](esquema-logico.md) | Esquema lógico renderizable en GitHub, complementario a la topología visual publicada. |
 | [Tecnologías](tecnologias.md) | Stack técnico utilizado. |
 | [Plan de trabajo](plan-trabajo.md) | Fases ejecutadas del laboratorio. |
 | [Checklist](checklist.md) | Estado de validaciones y cierre. |
