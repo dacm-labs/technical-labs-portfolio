@@ -5,6 +5,8 @@
 ![Área](https://img.shields.io/badge/área-SQL%20Server%20%7C%20Security%20%7C%20Audit-blueviolet)
 ![Stack](https://img.shields.io/badge/stack-SQL%20Server%202025%20%7C%20Always%20On%20%7C%20AD-lightgrey)
 
+![LAB-03 — SQL Server Hardening, Audit & Compliance](diagramas/lab03_cover.png)
+
 ## Descripción
 
 LAB-03 endurece el entorno de alta disponibilidad construido en LAB-02, incorporando controles de seguridad, auditoría y validaciones de cumplimiento sobre un despliegue SQL Server Always On Availability Groups.
@@ -40,6 +42,8 @@ El laboratorio parte de una arquitectura HADR ya funcional y añade una capa def
 | `ORN-FSW01` | File Share Witness para quorum | `10.10.20.40` |
 | `ORN-SQLCL01` | Windows Server Failover Cluster | `10.10.20.50` |
 | `ORN-SQLAG01` | Listener del Availability Group | `10.10.20.60` |
+
+![Topología lógica global LAB-03](diagramas/Lab003-Topologia_logica_global.png)
 
 Detalle completo: [arquitectura.md](arquitectura.md).
 
