@@ -139,6 +139,7 @@ Esto evita que ORN-SQL02, como réplica secundaria, genere alertas por antigüed
 Los diagramas finales y las evidencias seleccionadas se encuentran en:
 
 - [Diagramas LAB-04](diagramas/README.md)
+- [Esquema lógico Mermaid](esquema-logico.md)
 - [Evidencias LAB-04](evidencias/README.md)
 - [Manifest de capturas](evidencias/manifest.md)
 - [Script de extracción](scripts/powershell/09-extract-lab04-evidence-images.ps1)
@@ -152,6 +153,7 @@ Las capturas seleccionadas se generan desde el documento técnico local del labo
 | Documento | Contenido |
 |---|---|
 | [Arquitectura](arquitectura.md) | Diseño lógico del stack de monitorización, flujos, red y autenticación. |
+| [Esquema lógico Mermaid](esquema-logico.md) | Esquema lógico renderizable en GitHub, complementario al diagrama visual final. |
 | [Tecnologías](tecnologias.md) | Stack utilizado: Zabbix, Ubuntu, PostgreSQL, Windows, SQL Server, PowerShell y DMVs. |
 | [Plan de trabajo](plan-trabajo.md) | Bloques ejecutados y criterios de cierre. |
 | [Monitorización nativa](monitorizacion-nativa.md) | Baseline Windows / SQL Server. |
@@ -179,4 +181,4 @@ Mejoras futuras no bloqueantes:
 - Crear un dashboard visual específico para dirección/operación si se quiere una vista ejecutiva adicional.
 - Homogeneizar la cuenta del servicio Zabbix Agent 2 en ORN-SQL01 si se decide mantener el mismo modelo que ORN-SQL02.
 - Programar jobs AG-aware de backup si el laboratorio queda encendido de forma recurrente.
-- Ajustar triggers ruidosos del template Windows genérico si se quieren limpiar eventos no relacionados con SQL custom.
+- Ajustar triggers ruidososos del template Windows genérico si se quieren limpiar eventos no relacionados con SQL custom.
