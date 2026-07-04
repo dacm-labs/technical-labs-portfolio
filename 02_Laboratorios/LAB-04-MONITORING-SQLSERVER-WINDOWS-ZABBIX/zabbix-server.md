@@ -13,7 +13,7 @@ Para este laboratorio se selecciona Zabbix 7.0 LTS priorizando estabilidad, sopo
 | Parámetro | Valor |
 |---|---|
 | Nombre VM | ORN-MON01 |
-| Sistema operativo | Ubuntu Server 24.04 LTS |
+| Sistema operativo | Ubuntu Server 26.04 LTS |
 | Usuario administrativo | adm-it |
 | Rol | Servidor Zabbix |
 | CPU | 2 vCPU |
