@@ -21,7 +21,7 @@ El roadmap se ordena siguiendo tres criterios:
 La línea principal actual queda definida como:
 
 ```text
-SQL Server DBA → Alta disponibilidad → Hardening/Auditoría → Monitorización → AD/SOC/Cloud
+SQL Server DBA → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación → AD/SOC/Cloud
 ```
 
 ---
@@ -34,6 +34,7 @@ SQL Server DBA → Alta disponibilidad → Hardening/Auditoría → Monitorizaci
 | [LAB-01 — SQL Server DBA](../02_Laboratorios/LAB-01-SQLSERVER-DBA-BACKUP-SECURITY) | Completado v1 | SQL Server / DBA / Seguridad / Monitorización | SQL Server 2025 en dominio con backup, restore, PITR, SQL Agent, Database Mail, alertas, mínimo privilegio, auditoría, Query Store, dashboard DBA y evidencias visuales. |
 | [LAB-02 — SQL Server Always On Availability Groups](../02_Laboratorios/LAB-02-SQLSERVER-ALWAYS-ON-HADR) | Completado v1 | SQL Server / Alta disponibilidad / HA-DR | WSFC, File Share Witness, Availability Group, listener, failover, failback, lectura en secundaria, jobs AG-aware y validación final de continuidad. |
 | [LAB-03 — SQL Server Hardening, Audit & Compliance](../02_Laboratorios/LAB-03-SQLSERVER-HARDENING-AUDIT-COMPLIANCE) | Completado v1 | SQL Server / Seguridad / Auditoría / Compliance | Hardening de SQL Server Always On, Windows-only, `sa` deshabilitado, auditoría de servidor y base de datos, trazabilidad y mínimo privilegio con usuarios reales. |
+| [LAB-04 — Monitoring Stack for SQL Server & Windows](../02_Laboratorios/LAB-04-MONITORING-SQLSERVER-WINDOWS-ZABBIX) | Completado v1 | Monitorización / Operación / SQL Server | Zabbix Server 7.0 LTS, Zabbix Agent 2, monitorización Windows, UserParameters, checks SQL custom, items, triggers, alerta real recuperada y evidencias. |
 
 ---
 
@@ -41,31 +42,30 @@ SQL Server DBA → Alta disponibilidad → Hardening/Auditoría → Monitorizaci
 
 | Prioridad | Línea | Laboratorio / evolución prevista | Objetivo técnico |
 |---|---|---|---|
-| 1 | Monitorización y operación | LAB-04 — Monitoring Stack para SQL Server y Windows | Centralizar métricas, logs, alertas y dashboards sobre SQL Server, Windows, Always On y servicios críticos. |
-| 2 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Reforzar identidad, administración privilegiada, Tier 0, GPOs, auditoría de cambios y control de acceso. |
-| 3 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Correlación de eventos, reglas, alertas, FIM, casos de uso defensivos y respuesta básica ante incidentes. |
-| 4 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Conectar fundamentos cloud con identidad, backup, monitorización, seguridad y servicios híbridos. |
-| 5 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Crear scripts reutilizables para inventario, reporting, validaciones, mantenimiento y operación diaria. |
-| 6 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Construir base de datos, pipelines, análisis con Python/SQL y preparación para proyectos de IA aplicada. |
+| 1 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Reforzar identidad, administración privilegiada, Tier 0, GPOs, auditoría de cambios y control de acceso. |
+| 2 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Correlación de eventos, reglas, alertas, FIM, casos de uso defensivos y respuesta básica ante incidentes. |
+| 3 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Conectar fundamentos cloud con identidad, backup, monitorización, seguridad y servicios híbridos. |
+| 4 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Crear scripts reutilizables para inventario, reporting, validaciones, mantenimiento y operación diaria. |
+| 5 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Construir base de datos, pipelines, análisis con Python/SQL y preparación para proyectos de IA aplicada. |
 
 ---
 
 ## Continuidad técnica prevista
 
-La evolución del portfolio se plantea como una línea de trabajo progresiva, no como una lista cerrada de tareas. Los laboratorios completados hasta ahora consolidan una base de sistemas Windows, SQL Server DBA, seguridad defensiva, alta disponibilidad, hardening, auditoría, trazabilidad y mínimo privilegio.
+La evolución del portfolio se plantea como una línea de trabajo progresiva, no como una lista cerrada de tareas. Los laboratorios completados hasta ahora consolidan una base de sistemas Windows, SQL Server DBA, seguridad defensiva, alta disponibilidad, hardening, auditoría, trazabilidad, mínimo privilegio y monitorización operativa.
 
-La siguiente línea natural de evolución es reforzar la **monitorización y operación continua** sobre la plataforma ya construida. Esto permite cerrar una cadena profesional muy defendible:
+Tras LAB-04, la siguiente línea natural de evolución es reforzar **Active Directory defensivo**. Esto permite cerrar una cadena profesional muy defendible:
 
 ```text
-DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación
+DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación → Identidad defensiva
 ```
 
-Después de LAB-04, el portfolio puede crecer hacia Active Directory defensivo, SOC/Blue Team, automatización, cloud híbrido y datos/IA sin perder coherencia técnica.
+Después de LAB-05, el portfolio puede crecer hacia SOC/Blue Team, automatización, cloud híbrido y datos/IA sin perder coherencia técnica.
 
 Criterios de continuidad:
 
 - Mantener coherencia con los laboratorios ya publicados.
-- Aprovechar el dominio `orion.lab`, los nodos SQL, el Availability Group `ORION_AG01` y la base `OrionLabDB` como entorno técnico reutilizable.
+- Aprovechar el dominio `orion.lab`, los nodos SQL, el Availability Group `ORION_AG01`, Zabbix Server y la base `OrionLabDB` como entorno técnico reutilizable.
 - Priorizar laboratorios que aporten valor demostrable para sistemas, DBA, seguridad defensiva y operación IT.
 - Documentar decisiones, validaciones, incidencias y limitaciones de forma clara.
 - Evitar publicar ejercicios aislados que no aporten una progresión técnica defendible.
@@ -85,7 +85,7 @@ Endurezco la plataforma.
 Audito actividad.
 Valido mínimo privilegio.
 Monitorizo salud operativa.
-Evoluciono hacia cloud, SOC, automatización y datos.
+Evoluciono hacia identidad defensiva, SOC, cloud, automatización y datos.
 ```
 
 Esta narrativa ayuda a que el portfolio no parezca una colección de prácticas, sino una progresión técnica ordenada hacia roles de sistemas, DBA/Data Platform, seguridad defensiva, cloud y automatización.
