@@ -6,7 +6,7 @@ Ejecuta checks SQL Server para Zabbix Agent 2.
 .DESCRIPTION
 Wrapper local para exponer métricas SQL Server / Always On a Zabbix mediante UserParameters.
 El script devuelve un único valor por ejecución, compatible con zabbix_get e items numéricos.
-Ejecuta checks SQL Server usando Windows Authentication con la cuenta ORION\svc_zbx_sqlmon.
+Ejecuta checks SQL Server usando Windows Authentication con la cuenta ORION\svc_zbx_sqlmon cuando el agente corre con esa identidad.
 
 No se almacenan credenciales SQL en Git.
 Debe existir un fichero local en cada nodo SQL:
@@ -14,8 +14,7 @@ Debe existir un fichero local en cada nodo SQL:
 C:\ProgramData\ORION\ZabbixSql\orion_sql_monitor.env
 
 Formato:
-Server=localhost
-
+Server=tcp:localhost,1433
 
 #>
 
