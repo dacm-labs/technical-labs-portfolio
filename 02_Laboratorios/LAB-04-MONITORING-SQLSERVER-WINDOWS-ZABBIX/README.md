@@ -46,6 +46,7 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | BLOQUE 4 — Zabbix Agents | Completado | Nodos Windows monitorizados con Zabbix Agent 2 y ZBX verde. |
 | BLOQUE 5 — SQL custom monitoring | Completado | UserParameters, wrapper PowerShell y checks SQL validados con zabbix_get. |
 | BLOQUE 6 — Template, items, triggers y evidencias | Completado | Template exportado, items y triggers creados, alerta real generada y recuperada. |
+| BLOQUE 7 — Cierre documental | Completado | Documentación auxiliar, valor profesional, lecciones y roadmap alineados. |
 
 ## Resultado operativo
 
@@ -115,15 +116,23 @@ Las capturas seleccionadas se generan desde el documento técnico local del labo
 
 | Documento | Contenido |
 |---|---|
+| [Arquitectura](arquitectura.md) | Diseño lógico del stack de monitorización, flujos, red y autenticación. |
+| [Tecnologías](tecnologias.md) | Stack utilizado: Zabbix, Ubuntu, PostgreSQL, Windows, SQL Server, PowerShell y DMVs. |
+| [Plan de trabajo](plan-trabajo.md) | Bloques ejecutados y criterios de cierre. |
 | [Monitorización nativa](monitorizacion-nativa.md) | Baseline Windows / SQL Server. |
 | [Zabbix Server](zabbix-server.md) | Despliegue y validación de ORN-MON01. |
 | [Zabbix Agents](zabbix-agents.md) | Instalación y validación de agentes. |
 | [SQL Server Monitoring](sqlserver-monitoring.md) | Checks SQL custom y validaciones. |
+| [Checks custom con DMVs](checks-custom-dmv.md) | Diseño de UserParameters, wrapper PowerShell y métricas SQL. |
+| [Alertas y triggers](alertas-triggers.md) | Triggers, lógica primary-only y recuperación real. |
+| [Dashboards](dashboards.md) | Vistas Zabbix usadas y mejora futura de dashboard ejecutivo. |
 | [Validaciones](validaciones.md) | Estado final validado. |
 | [Triggers SQL custom](scripts/zabbix/triggers-documentation.md) | Items, triggers y recuperación real. |
 | [Evidencias](evidencias/README.md) | Manifest y extracción de capturas. |
 | [Cierre documental](cierre-lab04.md) | Resumen final del laboratorio. |
 | [Troubleshooting](troubleshooting.md) | Incidencias y resolución. |
+| [Valor profesional](valor-profesional.md) | Competencias demostradas. |
+| [Lecciones aprendidas](lecciones-aprendidas.md) | Aprendizajes técnicos y mejoras futuras. |
 | [Scripts](scripts/README.md) | Scripts SQL, PowerShell y Zabbix. |
 
 ## Estado de cierre
