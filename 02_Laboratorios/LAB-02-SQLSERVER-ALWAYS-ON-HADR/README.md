@@ -40,6 +40,8 @@ El laboratorio reutiliza el dominio, el primer nodo SQL, la estación administra
 | `ORN-SQLCL01` | Windows Server Failover Cluster | `10.10.20.50` |
 | `ORN-SQLAG01` | Listener del Availability Group | `10.10.20.60` |
 
+![Topología lógica global LAB-02](diagramas/01-topologia-logica-global-lab02.png)
+
 Topología completa: [arquitectura.md](arquitectura.md).
 
 ---
@@ -78,6 +80,10 @@ Topología completa: [arquitectura.md](arquitectura.md).
 | Endpoint HADR | `5022` accesible entre nodos |
 | DNS final | Limpio y coherente con la arquitectura |
 
+![Availability Group sincronizado y saludable](capturas/03-alwayson-ag/10-ag-orion-ag01-synchronized.jpg)
+
+![Listener ORN-SQLAG01 online](capturas/03-alwayson-ag/11-listener-orn-sqlag01-online.jpg)
+
 ---
 
 ## Pruebas realizadas
@@ -87,10 +93,12 @@ Topología completa: [arquitectura.md](arquitectura.md).
 - Failover manual de `ORN-SQL01` a `ORN-SQL02`.
 - Inserción por listener tras failover.
 - Failback manual a `ORN-SQL01`.
-- Lectura en réplica secundaria con `ApplicationIntent=ReadOnly`.
+- Lectura en réplica secundaria con intención de lectura.
 - Resincronización de réplica tras pruebas de disponibilidad.
 - Validación final de DNS y puertos `1433`, `5022` y `3343`.
 - Adaptación de jobs SQL Agent a entorno Always On.
+
+![Lectura en réplica secundaria](capturas/03-alwayson-ag/13-lectura-secundaria-applicationintent-readonly.png)
 
 ---
 
@@ -101,7 +109,7 @@ Topología completa: [arquitectura.md](arquitectura.md).
 | Clonación de nodo SQL no adecuada | Se creó `ORN-SQL02` mediante instalación limpia. |
 | Error de cadena LSN al unir la base al AG | Se reinicializó la secundaria con cadena `FULL + LOG` coherente y `NORECOVERY`. |
 | Listener sin estado online inicial | Se precreó el objeto en Active Directory y se delegaron permisos al clúster. |
-| Conexión a secundaria sin intención de lectura | Se validó conexión con `ApplicationIntent=ReadOnly`. |
+| Conexión a secundaria sin intención de lectura | Se validó conexión con intención de lectura. |
 | Registro DNS APIPA | Se limpió DNS y se evitó registro desde interfaz no utilizada. |
 | Jobs clásicos no adaptados | Se deshabilitaron para la base protegida y se crearon jobs AG-aware. |
 
@@ -111,17 +119,21 @@ Detalle completo: [troubleshooting.md](troubleshooting.md).
 
 ## Evidencias destacadas
 
-- Topología lógica global del entorno.
-- Validación de Windows Server Failover Cluster.
-- Quorum mediante File Share Witness.
-- Dashboard final del clúster WSFC.
-- Availability Group sincronizado y saludable.
-- Listener `ORN-SQLAG01` online y validación AD/DNS.
-- Lectura en réplica secundaria con `ApplicationIntent=ReadOnly`.
-- Failover, escritura por listener y failback.
-- DNS y puertos finales validados.
-- Jobs AG-aware en ambos nodos.
-- Preferencia de backup en secundaria y backup de log generado desde `ORN-SQL02`.
+### Clúster y quorum
+
+![Dashboard final del clúster WSFC](capturas/02-cluster-wsfc/07-dashboard-final-wsfc.jpg)
+
+### Always On y listener
+
+![Dashboard final de Always On](capturas/03-alwayson-ag/12-dashboard-final-alwayson.jpg)
+
+![Validación del listener AD y DNS](capturas/03-alwayson-ag/14-listener-ad-dns-validado.png)
+
+### Operación AG-aware
+
+![Jobs AG-aware en SQL01](capturas/05-jobs-validaciones-finales/22-jobs-ag-aware-sql01.png)
+
+![Backup de log generado desde SQL02](capturas/05-jobs-validaciones-finales/27-backup-log-sql02-generado.png)
 
 Relación de capturas: [evidencias.md](evidencias.md).
 
