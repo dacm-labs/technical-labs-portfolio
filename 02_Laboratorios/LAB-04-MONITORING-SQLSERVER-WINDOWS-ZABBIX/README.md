@@ -181,4 +181,4 @@ Mejoras futuras no bloqueantes:
 - Crear un dashboard visual específico para dirección/operación si se quiere una vista ejecutiva adicional.
 - Homogeneizar la cuenta del servicio Zabbix Agent 2 en ORN-SQL01 si se decide mantener el mismo modelo que ORN-SQL02.
 - Programar jobs AG-aware de backup si el laboratorio queda encendido de forma recurrente.
-- Ajustar triggers ruidososos del template Windows genérico si se quieren limpiar eventos no relacionados con SQL custom.
+- Ajustar triggers ruidosos del template Windows genérico si se quieren limpiar eventos no relacionados con SQL custom.
