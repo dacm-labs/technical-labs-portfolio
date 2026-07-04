@@ -89,11 +89,12 @@ Galería completa: [evidencias.md](evidencias.md).
 | Documento | Contenido |
 |---|---|
 | [Arquitectura](arquitectura.md) | Máquinas, red, flujo de administración y criterios de diseño. |
+| [Esquema lógico Mermaid](esquema-logico.md) | Esquema lógico renderizable en GitHub, complementario al flujo de administración publicado. |
 | [Tecnologías](tecnologias.md) | Stack técnico, componentes SQL y decisiones relevantes. |
 | [Plan de trabajo](plan-trabajo.md) | Fases ejecutadas del laboratorio. |
 | [Checklist](checklist.md) | Validaciones finales del laboratorio. |
 | [Backup & Recovery](backup-recovery.md) | Backups, restore, PITR, reparación y retención. |
-| [Seguridad](seguridad.md) | Grupos AD, roles SQL y pruebas de mínimo privilegio. |
+| [Seguridad](seguridad.md) | Grupos AD, logins, roles y mínimo privilegio. |
 | [Auditoría y monitorización](auditoria-monitorizacion.md) | Avisos, SQL Server Audit y seguimiento operativo. |
 | [Dashboard DBA](dashboard-dba.md) | Vistas DBA, Query Store y salud final del entorno. |
 | [Evidencias](evidencias.md) | Galería visual de capturas publicadas. |
