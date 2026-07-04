@@ -94,6 +94,7 @@ Galería completa: [evidencias.md](evidencias.md).
 | Documento | Contenido |
 |---|---|
 | [Arquitectura](arquitectura.md) | Diseño de zonas, redes, máquinas, flujos y limitaciones. |
+| [Esquema lógico Mermaid](esquema-logico.md) | Esquema lógico renderizable en GitHub, complementario a los diagramas publicados. |
 | [Tecnologías](tecnologias.md) | Stack utilizado y función de cada herramienta. |
 | [Evidencias](evidencias.md) | Capturas y diagramas seleccionados con valor técnico. |
 | [Explicación técnica](defensa.md) | Resumen defendible del caso de estudio. |
