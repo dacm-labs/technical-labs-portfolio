@@ -62,18 +62,23 @@ El laboratorio construye una base SQL Server formada por controlador de dominio,
 
 ## Evidencias destacadas
 
-- Dominio, DNS, OUs y grupos de Active Directory.
-- SQL Server instalado y conexión remota desde estación DBA.
-- Rutas de datos y logs separadas.
-- Backups FULL, DIFF y LOG.
-- Restore completo y point-in-time recovery.
-- Reparación de datos desde base PITR.
-- Jobs y schedules de SQL Server Agent.
-- Avisos operativos por fallo de jobs.
-- Seguridad SQL y mínimo privilegio.
-- Eventos de SQL Server Audit.
-- Comparativa Query Store.
-- Dashboard DBA final.
+### Base de dominio y conexión SQL
+
+![Dominio, DNS y validaciones iniciales](capturas/01-dominio-dns-validado.png)
+
+![Conexión remota desde estación DBA](capturas/04-ssms-conexion-remota.png)
+
+### Backup, recovery y operación
+
+![Backups FULL, DIFF y LOG](capturas/06-backups-full-diff-log.png)
+
+![Jobs y schedules de SQL Server Agent](capturas/10-sql-agent-jobs-schedules.png)
+
+### Seguridad, auditoría y cierre
+
+![Seguridad SQL y mínimo privilegio](capturas/13-seguridad-minimo-privilegio.png)
+
+![Dashboard DBA final](capturas/16-dashboard-dba-ok.png)
 
 Galería completa: [evidencias.md](evidencias.md).
 
