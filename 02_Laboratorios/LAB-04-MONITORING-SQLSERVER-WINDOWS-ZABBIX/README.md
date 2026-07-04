@@ -24,6 +24,10 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 - Export del template Zabbix a YAML.
 - Manifest y script de extracción de evidencias visuales seleccionadas.
 
+## Arquitectura visual
+
+![Diagrama de arquitectura LAB-04](diagramas/lab04_diagrama_de_arquitectura.png)
+
 ## Entorno
 
 | Máquina | Rol | IP |
@@ -50,6 +54,8 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | BLOQUE 6 — Template, items, triggers y evidencias | Completado | Template exportado, items y triggers creados, alerta real generada y recuperada. |
 | BLOQUE 7 — Cierre documental | Completado | Documentación auxiliar, valor profesional, lecciones y roadmap alineados. |
 
+![Cobertura completa de hosts en Zabbix](evidencias/images/02-zabbix-hosts-full-coverage-green.jpg)
+
 ## Resultado operativo
 
 | Elemento | Resultado |
@@ -66,6 +72,12 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | Validación real | Problema SQL LOG backup old generado y resuelto |
 | Estado final SQL custom | Sin problemas SQL custom activos |
 
+## Checks SQL custom validados
+
+![zabbix_get contra ORN-SQL01](evidencias/images/03-sql-custom-zabbix-get-sql01.jpg)
+
+![zabbix_get contra ORN-SQL02](evidencias/images/04-sql-custom-zabbix-get-sql02.jpg)
+
 ## Items SQL custom
 
 | Item | Key | Resultado esperado |
@@ -81,6 +93,12 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | Always On health | `orion.sql.ag.health` | 1 |
 | Always On is primary for OrionLabDB | `orion.sql.ag.is_primary[OrionLabDB]` | 1 en primario, 0 en secundario |
 
+![Lista de 10 items SQL custom](evidencias/images/06-items-list-10-custom.jpg)
+
+![Latest data con métricas SQL custom](evidencias/images/07-latest-data-sql-items.jpg)
+
+![Latest data Always On](evidencias/images/08-latest-data-alwayson-items.jpg)
+
 ## Triggers SQL custom
 
 | Trigger | Severidad | Objetivo |
@@ -94,6 +112,8 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | SQL FULL backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar por FULL antiguo solo en primario. |
 | SQL LOG backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar por LOG antiguo solo en primario. |
 
+![Triggers SQL custom finales](evidencias/images/09-triggers-list-final.jpg)
+
 ## Diseño anti-falsos positivos
 
 Los triggers de backups incluyen lógica primary-only:
@@ -104,6 +124,16 @@ last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1
 
 Esto evita que ORN-SQL02, como réplica secundaria, genere alertas por antigüedad de backups cuando el control operativo se valida en el primario.
 
+## Validación real de alerta y recuperación
+
+![Problema LOG backup old detectado](evidencias/images/10-problem-log-backup-detected.jpg)
+
+![Backup LOG manual registrado en msdb](evidencias/images/11-backup-log-executed-msdb.jpg)
+
+![Problema LOG backup old resuelto](evidencias/images/12-problem-log-backup-resolved.jpg)
+
+![Estado final sin problemas SQL custom activos](evidencias/images/13-problems-sql-no-active.jpg)
+
 ## Diagramas y evidencias
 
 Los diagramas finales y las evidencias seleccionadas se encuentran en:
@@ -112,6 +142,8 @@ Los diagramas finales y las evidencias seleccionadas se encuentran en:
 - [Evidencias LAB-04](evidencias/README.md)
 - [Manifest de capturas](evidencias/manifest.md)
 - [Script de extracción](scripts/powershell/09-extract-lab04-evidence-images.ps1)
+
+![Export YAML del template](evidencias/images/14-template-export-yaml-download.jpg)
 
 Las capturas seleccionadas se generan desde el documento técnico local del laboratorio y deben revisarse visualmente antes de publicarse.
 
