@@ -156,6 +156,7 @@ Galería completa: [evidencias.md](evidencias.md).
 | Documento | Contenido |
 |---|---|
 | [Arquitectura](arquitectura.md) | Diseño del entorno, flujo Always On y separación de funciones. |
+| [Esquema lógico Mermaid](esquema-logico.md) | Esquema lógico renderizable en GitHub, complementario a la topología visual publicada. |
 | [Tecnologías](tecnologias.md) | Stack técnico utilizado. |
 | [Plan de trabajo](plan-trabajo.md) | Bloques ejecutados y secuencia del laboratorio. |
 | [Hardening](hardening.md) | Baseline, hallazgos y correcciones aplicadas. |
