@@ -10,14 +10,14 @@ LAB-04 reutiliza la plataforma construida en LAB-01, LAB-02 y LAB-03, incorporan
 
 ```mermaid
 flowchart LR
-    DBA[ORN-DBA01\nDBA workstation\n10.10.20.30]
-    MON[ORN-MON01\nZabbix Server 7.0 LTS\n10.10.20.70]
-    DC[ORN-DC01\nAD DS / DNS\n10.10.20.10]
-    SQL1[ORN-SQL01\nSQL Server primary\n10.10.20.20]
-    SQL2[ORN-SQL02\nSQL Server secondary\n10.10.20.21]
-    FSW[ORN-FSW01\nFile Share Witness\n10.10.20.40]
-    AG[ORN-SQLAG01\nAlways On Listener\n10.10.20.60]
-    CL[ORN-SQLCL01\nWSFC Cluster Name\n10.10.20.50]
+    DBA["ORN-DBA01<br/>DBA workstation<br/>10.10.20.30"]
+    MON["ORN-MON01<br/>Zabbix Server 7.0 LTS<br/>10.10.20.70"]
+    DC["ORN-DC01<br/>AD DS / DNS<br/>10.10.20.10"]
+    SQL1["ORN-SQL01<br/>SQL Server primary<br/>10.10.20.20"]
+    SQL2["ORN-SQL02<br/>SQL Server secondary<br/>10.10.20.21"]
+    FSW["ORN-FSW01<br/>File Share Witness<br/>10.10.20.40"]
+    AG["ORN-SQLAG01<br/>Always On Listener<br/>10.10.20.60"]
+    CL["ORN-SQLCL01<br/>WSFC Cluster Name<br/>10.10.20.50"]
 
     DBA -->|HTTP 80| MON
     MON -->|Zabbix Agent TCP 10050| DC
