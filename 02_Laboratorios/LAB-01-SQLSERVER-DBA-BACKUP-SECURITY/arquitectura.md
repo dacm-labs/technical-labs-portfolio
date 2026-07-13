@@ -4,7 +4,7 @@
 
 El LAB-01 define una arquitectura de laboratorio orientada a administración profesional de SQL Server dentro de un portfolio técnico documentado.
 
-El objetivo principal es disponer de una base técnica realista para practicar tareas de DBA junior: instalación, administración, backup, recovery, seguridad, automatización, mantenimiento, monitorización y documentación operativa.
+El objetivo principal es disponer de una base técnica realista para practicar tareas de administración DBA: instalación, administración, backup, recovery, seguridad, automatización, mantenimiento, monitorización y documentación operativa.
 
 ## Diseño general
 
