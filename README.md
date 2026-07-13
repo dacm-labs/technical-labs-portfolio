@@ -38,12 +38,13 @@ Este portfolio está pensado para mostrar trabajo técnico realista, documentaci
 
 Este repositorio puede apoyar candidaturas orientadas a:
 
-- Administrador de sistemas junior / técnico de sistemas.
-- DBA SQL Server junior.
+- Administrador de sistemas / Técnico de sistemas.
+- SQL Server DBA / Soporte BBDD SQL.
+- Operaciones e infraestructura IT.
 - Técnico de infraestructura Windows / Active Directory.
-- Técnico de soporte avanzado / operación IT.
-- Perfil junior de ciberseguridad defensiva, Blue Team o SOC.
-- Técnico cloud junior con base de sistemas, seguridad y datos.
+- Ciberseguridad defensiva / Blue Team / SOC L1.
+- Cloud Operations con base de sistemas, seguridad y datos.
+- Data Operations / Calidad del dato.
 
 ---
 
@@ -208,6 +209,7 @@ Incluye:
 - Template reutilizable `ORION SQL Server Custom Checks`.
 - 10 items SQL custom por nodo SQL.
 - 8 triggers SQL custom con lógica primary-only para backups en Always On.
+- Umbrales de backup alineados con la política operativa: FULL diario y LOG cada 15 minutos.
 - Validación real de alerta `SQL LOG backup old` en ORN-SQL01.
 - Recuperación real tras backup LOG manual.
 - Export YAML del template y evidencias visuales publicadas.
