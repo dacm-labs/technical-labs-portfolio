@@ -33,15 +33,15 @@ El entorno se basa en un dominio Windows llamado `orion.lab`, con separación cl
 flowchart LR
     subgraph DOMAIN["Dominio orion.lab - 10.10.20.0/24"]
         DC["ORN-DC01\nDomain Controller / DNS\n10.10.20.10"]
-        SQL["ORN-SQL01\nSQL Server 2025 Developer\n10.10.20.20"]
+        SQL["ORN-SQL01\nSQL Server 2025 Developer Edition\n10.10.20.20"]
         DBA["ORN-DBA01\nDBA Workstation\nSSMS / PowerShell\n10.10.20.30"]
     end
 
     subgraph SQLDATA["Almacenamiento SQL Server"]
         DATA["D:/SQLData\nData files"]
-        LOGS["E:/SQLLogs\nTransaction logs"]
-        BCK["F:/SQLBackups\nBackups"]
-        TEMP["TempDB dedicada\n4 data files"]
+        LOGS["L:/SQLLogs\nTransaction logs"]
+        TEMP["T:/SQLTempDB\nTempDB files"]
+        BCK["B:/SQLBackups\nFULL / DIFF / LOG"]
     end
 
     subgraph OPS["Operación DBA"]
