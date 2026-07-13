@@ -63,12 +63,12 @@ flowchart LR
 | Máquina | RAM | vCPU | Rol |
 |---|---:|---:|---|
 | `ORN-DC01` | 2 GB | 2 | AD DS / DNS |
-| `ORN-SQL01` | 6 GB | 4 | SQL Server / AG replica |
-| `ORN-SQL02` | 6 GB | 4 | SQL Server / AG replica |
+| `ORN-SQL01` | 4 GB | 4 | SQL Server / AG replica |
+| `ORN-SQL02` | 4 GB | 4 | SQL Server / AG replica |
 | `ORN-DBA01` | 4 GB | 2 | Administración |
-| `ORN-FSW01` | 2 GB | 2 | File Share Witness |
+| `ORN-FSW01` | 2 GB | 1 | File Share Witness |
 
-Consumo aproximado total: **20 GB RAM**.
+Consumo aproximado total: **16 GB RAM**.
 
 ## Componentes principales
 
