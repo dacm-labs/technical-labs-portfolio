@@ -65,7 +65,7 @@ zabbix_export:
           units: h
           description: |
             Returns the age in hours of the last FULL backup for OrionLabDB.
-            Expected value depends on backup policy.
+            Operational threshold: <= 26 hours on the primary replica.
         - uuid: eb52232209044e50bff0dacc5e12b7b5
           name: 'SQL backup LOG age hours for OrionLabDB'
           key: 'orion.sql.backup.log.age.hours[OrionLabDB]'
@@ -75,7 +75,7 @@ zabbix_export:
           units: h
           description: |
             Returns the age in hours of the last LOG backup for OrionLabDB.
-            Expected value depends on backup policy.
+            Operational threshold: <= 1 hour on the primary replica.
         - uuid: 5494516709624e7bb4c65636a298123b
           name: 'SQL blocking sessions'
           key: orion.sql.blocking.sessions
@@ -155,18 +155,18 @@ zabbix_export:
             Expected value: numeric session count.
   triggers:
     - uuid: d0bd335c62fa4f048086d67dd341d6dd
-      expression: 'last(/ORION SQL Server Custom Checks/orion.sql.backup.full.age.hours[OrionLabDB])>168 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1'
+      expression: 'last(/ORION SQL Server Custom Checks/orion.sql.backup.full.age.hours[OrionLabDB])>26 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1'
       name: 'SQL FULL backup old for OrionLabDB on {HOST.NAME}'
       event_name: 'SQL FULL backup old for OrionLabDB on {HOST.NAME}'
       priority: AVERAGE
       description: |
-        The last FULL backup for OrionLabDB is older than 168 hours on the current primary replica.
-        Expected value: <= 168 hours on primary.
+        The last FULL backup for OrionLabDB is older than 26 hours on the current primary replica.
+        Expected value: <= 26 hours on primary.
     - uuid: 06a53015c1974c92acff874585cb634a
-      expression: 'last(/ORION SQL Server Custom Checks/orion.sql.backup.log.age.hours[OrionLabDB])>24 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1'
+      expression: 'last(/ORION SQL Server Custom Checks/orion.sql.backup.log.age.hours[OrionLabDB])>1 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1'
       name: 'SQL LOG backup old for OrionLabDB on {HOST.NAME}'
       event_name: 'SQL LOG backup old for OrionLabDB on {HOST.NAME}'
       priority: AVERAGE
       description: |
-        The last LOG backup for OrionLabDB is older than 24 hours on the current primary replica.
-        Expected value: <= 24 hours on primary.
+        The last LOG backup for OrionLabDB is older than 1 hour on the current primary replica.
+        Expected value: <= 1 hour on primary.
