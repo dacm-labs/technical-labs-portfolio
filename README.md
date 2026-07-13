@@ -58,7 +58,9 @@ SQL Server DBA + infraestructura Windows + seguridad + monitorización + alta di
 La secuencia técnica actual queda orientada así:
 
 ```text
-LAB-00 AÉGIDA → LAB-01 SQL Server DBA → LAB-02 Always On → LAB-03 Hardening/Audit → LAB-04 Monitoring → AD/SOC/Cloud
+LAB-00 AÉGIDA → LAB-01 SQL Server DBA → LAB-02 Always On → LAB-03 Hardening/Audit
+→ LAB-04 Monitoring → LAB-05 Automation → LAB-06 NoSQL → LAB-07 Data/BI
+→ LAB-08 Azure Hybrid → LAB-09 Detection & Response → LAB-10 AD Hardening
 ```
 
 ---
@@ -260,22 +262,29 @@ Documentación principal:
 
 ### Próximos laboratorios previstos
 
-El roadmap prioriza laboratorios que aprovechan la plataforma ya construida y aumentan su valor operativo: Active Directory defensivo, SOC/Blue Team, automatización, cloud híbrido y datos.
+El roadmap prioriza laboratorios que reutilizan la plataforma ya construida y cubren competencias demandadas en administración de sistemas, operaciones IT, bases de datos, cloud, datos y ciberseguridad defensiva.
 
 | Prioridad | Línea | Laboratorio / evolución prevista | Objetivo técnico |
 |---|---|---|---|
-| 1 | Active Directory defensivo | LAB-05 — AD Hardening & Tiering | Reforzar identidad, administración privilegiada, Tier 0, GPOs, auditoría de cambios y control de acceso. |
-| 2 | SOC / Blue Team | LAB-06 — Wazuh Detection & Response | Correlación de eventos, reglas, alertas, FIM, casos de uso defensivos y respuesta básica ante incidentes. |
-| 3 | Cloud / híbrido | LAB-07 — Azure Hybrid Foundations | Conectar fundamentos cloud con identidad, backup, monitorización, seguridad y servicios híbridos. |
-| 4 | Automatización | LAB-08 — PowerShell Automation for Sysadmin / DBA | Crear scripts reutilizables para inventario, reporting, validaciones, mantenimiento y operación diaria. |
-| 5 | Datos / IA | LAB-09 — Data Platform & AI Foundations | Construir base de datos, pipelines, análisis con Python/SQL y preparación para proyectos de IA aplicada. |
+| 1 | Automatización | LAB-05 — PowerShell Automation for Sysadmin, DBA & IT Operations | Crear una herramienta operativa reutilizable para inventario, salud de sistemas, Active Directory, WSFC, Always On, backups, jobs, reporting, logging, gestión de errores y ejecución programada. |
+| 2 | NoSQL / DBA | LAB-06 — MongoDB & Redis Administration, HA and Recovery | Administrar MongoDB Replica Sets y Redis Sentinel con seguridad, índices, persistencia, backups, recuperación, monitorización y failover. |
+| 3 | Datos / BI | LAB-07 — Data Operations & BI with SQL Server, Python and Power BI | Construir un flujo de calidad del dato y ETL/ELT con Python y Pandas, SQL Server staging, modelo dimensional, reconciliación, KPIs y dashboards. |
+| 4 | Cloud / híbrido | LAB-08 — Azure Hybrid Operations & Monitoring | Desplegar una base operativa en Azure con redes, RBAC, máquinas virtuales, Azure Monitor, Log Analytics, alertas, backup, restauración y automatización. |
+| 5 | SOC / Blue Team | LAB-09 — Wazuh Detection Engineering & Incident Response | Crear casos de uso de detección, reglas, correlación, FIM, IOC, mapeo MITRE ATT&CK, investigación, respuesta y cierre documentado. |
+| 6 | Active Directory defensivo | LAB-10 — AD Hardening & Tiering | Reforzar identidad y administración privilegiada mediante Tier 0/1/2, PAW, GPOs, LAPS, delegación, auditoría de cambios y validación defensiva. |
+
+### Evolución complementaria de observabilidad
+
+Como extensión del LAB-04 se prevé **LAB-04.1 — Prometheus & Grafana Observability Extension**, incorporando exporters, recopilación de métricas, dashboards, alertas, una incidencia reproducible y una comparativa técnica con Zabbix.
 
 ### Criterio de continuidad
 
-La evolución prevista no arranca laboratorios aislados: cada nuevo bloque reutiliza o amplía la infraestructura ya documentada. Tras LAB-04 Monitoring, la prioridad natural pasa a **LAB-05 AD Hardening & Tiering**, manteniendo la cadena profesional construida hasta ahora:
+La evolución prevista evita laboratorios aislados: cada nuevo bloque reutiliza o amplía la infraestructura, los datos, los procedimientos y las evidencias ya documentadas. Tras LAB-04 Monitoring, la prioridad pasa a **LAB-05 — PowerShell Automation for Sysadmin, DBA & IT Operations**, para convertir las validaciones actuales en una herramienta operativa reutilizable.
 
 ```text
-DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación → Identidad defensiva
+DBA base → Alta disponibilidad → Hardening/Auditoría → Monitorización/Operación
+→ Automatización → NoSQL/Data Operations → Cloud híbrido → Detección y respuesta
+→ Hardening de identidad
 ```
 
-Después, el portfolio puede crecer hacia SOC/Blue Team, automatización, cloud híbrido y datos/IA sin perder coherencia técnica.
+Esta secuencia amplía el portfolio hacia automatización, plataformas NoSQL, operaciones de datos, cloud, SOC y seguridad de identidad sin perder la coherencia técnica construida desde LAB-00 hasta LAB-04.
