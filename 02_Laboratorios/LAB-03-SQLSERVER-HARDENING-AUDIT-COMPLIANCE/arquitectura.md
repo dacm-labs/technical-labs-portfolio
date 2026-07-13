@@ -12,7 +12,7 @@ LAB-03 mantiene la misma base HADR y añade controles de seguridad, auditoría y
 
 La siguiente imagen muestra la topología lógica global del LAB-03 con el entorno Always On heredado de LAB-02 y la capa de hardening, auditoría y mínimo privilegio añadida sobre ambos nodos SQL Server.
 
-![Topología lógica global LAB-03](diagramas/Lab003-Topologia_logica_global.png)
+![Topología lógica global LAB-03](diagramas/lab03_topologia_logica_global.png)
 
 ---
 
