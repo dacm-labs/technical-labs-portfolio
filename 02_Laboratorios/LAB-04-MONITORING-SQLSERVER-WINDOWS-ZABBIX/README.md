@@ -1,5 +1,11 @@
 # LAB-04 — Monitoring Stack for SQL Server & Windows
 
+![Estado](https://img.shields.io/badge/estado-completado%20v1-brightgreen)
+![Tipo](https://img.shields.io/badge/tipo-laboratorio-orange)
+![Área](https://img.shields.io/badge/área-Monitorización%20%7C%20Operación%20%7C%20SQL%20Server-blueviolet)
+![Stack](https://img.shields.io/badge/stack-Zabbix%207.0%20LTS%20%7C%20Windows%20%7C%20SQL%20Server-lightgrey)
+![Documentación](https://img.shields.io/badge/documentación-markdown-lightgrey)
+
 ![LAB-04 — Monitoring Stack for SQL Server & Windows](diagramas/lab04_cover.png)
 
 ## Objetivo
@@ -20,6 +26,7 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 - 10 items SQL custom por nodo SQL.
 - 8 triggers SQL custom.
 - Lógica primary-only para backups en Always On.
+- Umbrales operativos alineados con la política de backup: FULL diario y LOG cada 15 minutos.
 - Alerta real por LOG backup antiguo en el primario y recuperación tras backup LOG manual.
 - Export del template Zabbix a YAML.
 - Manifest y script de extracción de evidencias visuales seleccionadas.
@@ -68,6 +75,8 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | Template SQL custom | ORION SQL Server Custom Checks |
 | Items SQL custom | 10 por nodo SQL |
 | Triggers SQL custom | 8 |
+| Umbral FULL | Más de 26 horas en la réplica primaria |
+| Umbral LOG | Más de 1 hora en la réplica primaria |
 | Export template | `scripts/zabbix/template-orion-sqlserver-custom.yaml` |
 | Validación real | Problema SQL LOG backup old generado y resuelto |
 | Estado final SQL custom | Sin problemas SQL custom activos |
@@ -88,8 +97,8 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | SQL user sessions | `orion.sql.sessions.user` | valor numérico |
 | SQL blocking sessions | `orion.sql.blocking.sessions` | 0 |
 | SQL Agent failed jobs last 24h | `orion.sql.jobs.failed24h` | 0 |
-| SQL backup FULL age hours for OrionLabDB | `orion.sql.backup.full.age.hours[OrionLabDB]` | según política |
-| SQL backup LOG age hours for OrionLabDB | `orion.sql.backup.log.age.hours[OrionLabDB]` | según política |
+| SQL backup FULL age hours for OrionLabDB | `orion.sql.backup.full.age.hours[OrionLabDB]` | <= 26 h en primario |
+| SQL backup LOG age hours for OrionLabDB | `orion.sql.backup.log.age.hours[OrionLabDB]` | <= 1 h en primario |
 | Always On health | `orion.sql.ag.health` | 1 |
 | Always On is primary for OrionLabDB | `orion.sql.ag.is_primary[OrionLabDB]` | 1 en primario, 0 en secundario |
 
@@ -109,8 +118,8 @@ Implementar un stack de monitorización centralizada para SQL Server, Windows Se
 | Always On unhealthy on `{HOST.NAME}` | High | Detectar estado no saludable del AG. |
 | SQL blocking sessions detected on `{HOST.NAME}` | Warning | Detectar bloqueos SQL sostenidos. |
 | SQL Agent failed jobs detected on `{HOST.NAME}` | Average | Detectar jobs fallidos en 24 horas. |
-| SQL FULL backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar por FULL antiguo solo en primario. |
-| SQL LOG backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar por LOG antiguo solo en primario. |
+| SQL FULL backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar si el FULL supera 26 horas solo en primario. |
+| SQL LOG backup old for OrionLabDB on `{HOST.NAME}` | Average | Alertar si el LOG supera 1 hora solo en primario. |
 
 ![Triggers SQL custom finales](evidencias/images/09-triggers-list-final.jpg)
 
