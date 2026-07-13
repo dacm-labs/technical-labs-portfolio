@@ -10,7 +10,7 @@ El LAB-01 utiliza un stack Microsoft orientado a administración profesional de 
 | DNS | Windows Server DNS | Resolución directa e inversa de la red `10.10.20.0/24`. |
 | Sistema servidor | Windows Server 2025 | Base para `ORN-DC01` y `ORN-SQL01`. |
 | Estación cliente | Windows 11 Pro | Base para `ORN-DBA01`, estación administrativa DBA. |
-| Base de datos | SQL Server 2025 Enterprise Developer | Instancia principal en `ORN-SQL01`. |
+| Base de datos | SQL Server 2025 Developer Edition | Instancia principal en `ORN-SQL01`. |
 | Administración SQL | SQL Server Management Studio | Administración remota desde `ORN-DBA01`. |
 | Automatización SQL | SQL Server Agent | Jobs de backup, CHECKDB, limpieza y alertas. |
 | Correo SQL | Database Mail | Envío de notificaciones operativas desde SQL Server. |
@@ -69,4 +69,3 @@ Esta separación mejora la claridad operativa del entorno y permite explicar bue
 - Activación de Database Mail para notificación de fallos.
 - Uso de SQL Server Audit y Query Store para trazabilidad y diagnóstico.
 - Preparación del laboratorio como base para una futura fase Always On.
-
