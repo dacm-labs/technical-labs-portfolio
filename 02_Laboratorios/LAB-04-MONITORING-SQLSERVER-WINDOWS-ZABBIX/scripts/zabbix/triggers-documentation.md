@@ -16,7 +16,7 @@ El objetivo es detectar fallos relevantes de operación SQL Server sin generar f
 |---|---|
 | Zabbix Server | ORN-MON01 |
 | Hosts SQL monitorizados | ORN-SQL01, ORN-SQL02 |
-| SQL Server | SQL Server 2025 Developer |
+| SQL Server | SQL Server 2025 Developer Edition |
 | Base validada | OrionLabDB |
 | Availability Group | ORION_AG01 |
 | Template Zabbix | ORION SQL Server Custom Checks |
@@ -36,8 +36,20 @@ El objetivo es detectar fallos relevantes de operación SQL Server sin generar f
 | SQL blocking sessions | orion.sql.blocking.sessions | 0 |
 | SQL Agent failed jobs last 24h | orion.sql.jobs.failed24h | 0 |
 | SQL user sessions | orion.sql.sessions.user | valor numérico |
-| SQL backup FULL age hours for OrionLabDB | orion.sql.backup.full.age.hours[OrionLabDB] | según política |
-| SQL backup LOG age hours for OrionLabDB | orion.sql.backup.log.age.hours[OrionLabDB] | según política |
+| SQL backup FULL age hours for OrionLabDB | orion.sql.backup.full.age.hours[OrionLabDB] | <= 26 h en primario |
+| SQL backup LOG age hours for OrionLabDB | orion.sql.backup.log.age.hours[OrionLabDB] | <= 1 h en primario |
+
+## Política de backup y umbrales
+
+Los umbrales se alinean con la política operativa documentada en LAB-01:
+
+| Tipo | Frecuencia planificada | Umbral Zabbix |
+|---|---:|---:|
+| FULL | Diario | Más de 26 horas |
+| DIFF | Cada 6 horas | Revisado desde jobs y consultas DBA; sin trigger dedicado en v1 |
+| LOG | Cada 15 minutos | Más de 1 hora |
+
+El margen evita alertas por pequeños retrasos puntuales, pero detecta la pérdida de varias ejecuciones consecutivas.
 
 ## Triggers creados
 
@@ -47,8 +59,8 @@ El objetivo es detectar fallos relevantes de operación SQL Server sin generar f
 | SQL Agent failed jobs detected on {HOST.NAME} | Average | last(/ORION SQL Server Custom Checks/orion.sql.jobs.failed24h)>0 | Detectar jobs fallidos en las últimas 24 horas. |
 | SQL blocking sessions detected on {HOST.NAME} | Warning | min(/ORION SQL Server Custom Checks/orion.sql.blocking.sessions,5m)>0 | Detectar bloqueos SQL sostenidos. |
 | SQL custom ping failed on {HOST.NAME} | High | max(/ORION SQL Server Custom Checks/orion.sql.ping,3m)=0 | Detectar fallo general del check SQL custom. |
-| SQL FULL backup old for OrionLabDB on {HOST.NAME} | Average | last(/ORION SQL Server Custom Checks/orion.sql.backup.full.age.hours[OrionLabDB])>168 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1 | Alertar si el FULL backup es antiguo solo en el primario. |
-| SQL LOG backup old for OrionLabDB on {HOST.NAME} | Average | last(/ORION SQL Server Custom Checks/orion.sql.backup.log.age.hours[OrionLabDB])>24 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1 | Alertar si el LOG backup es antiguo solo en el primario. |
+| SQL FULL backup old for OrionLabDB on {HOST.NAME} | Average | last(/ORION SQL Server Custom Checks/orion.sql.backup.full.age.hours[OrionLabDB])>26 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1 | Alertar si el FULL backup supera 26 horas solo en el primario. |
+| SQL LOG backup old for OrionLabDB on {HOST.NAME} | Average | last(/ORION SQL Server Custom Checks/orion.sql.backup.log.age.hours[OrionLabDB])>1 and last(/ORION SQL Server Custom Checks/orion.sql.ag.is_primary[OrionLabDB])=1 | Alertar si el LOG backup supera 1 hora solo en el primario. |
 | SQL Server Agent down on {HOST.NAME} | High | max(/ORION SQL Server Custom Checks/orion.sql.agent.running,3m)=0 | Detectar SQL Server Agent detenido. |
 | SQL Server service down on {HOST.NAME} | Disaster | max(/ORION SQL Server Custom Checks/orion.sql.service.running,3m)=0 | Detectar SQL Server Database Engine detenido. |
 
@@ -155,6 +167,7 @@ La validación demuestra:
 - Detección de bloqueos SQL.
 - Detección de jobs fallidos.
 - Control de antigüedad de backups FULL y LOG.
+- Umbrales de backup alineados con la política de mantenimiento.
 - Lógica primary-only para evitar falsos positivos en réplicas secundarias.
 - Generación real de problema en Zabbix.
 - Resolución real tras corrección operativa.
