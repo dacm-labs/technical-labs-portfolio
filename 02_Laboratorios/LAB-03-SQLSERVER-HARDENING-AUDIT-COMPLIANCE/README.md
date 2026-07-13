@@ -44,7 +44,7 @@ El laboratorio parte de una arquitectura HADR ya funcional y añade una capa def
 | `ORN-SQLCL01` | Windows Server Failover Cluster | `10.10.20.50` |
 | `ORN-SQLAG01` | Listener del Availability Group | `10.10.20.60` |
 
-![Topología lógica global LAB-03](diagramas/Lab003-Topologia_logica_global.png)
+![Topología lógica global LAB-03](diagramas/lab03_topologia_logica_global.png)
 
 Detalle completo: [arquitectura.md](arquitectura.md).
 
