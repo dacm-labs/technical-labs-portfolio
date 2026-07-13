@@ -1,11 +1,12 @@
 # LAB-02 — SQL Server Always On Availability Groups
 
-![LAB-02 — SQL Server Always On Availability Groups](diagramas/lab02_cover.png)
-
-![Estado](https://img.shields.io/badge/estado-completado-success)
+![Estado](https://img.shields.io/badge/estado-completado%20v1-brightgreen)
 ![Tipo](https://img.shields.io/badge/tipo-laboratorio-orange)
 ![Área](https://img.shields.io/badge/área-SQL%20Server%20%7C%20HA%2FDR%20%7C%20DBA-blueviolet)
 ![Stack](https://img.shields.io/badge/stack-SQL%20Server%202025%20%7C%20WSFC%20%7C%20Always%20On-lightgrey)
+![Documentación](https://img.shields.io/badge/documentación-markdown-lightgrey)
+
+![LAB-02 — SQL Server Always On Availability Groups](diagramas/lab02_cover.png)
 
 ## Descripción
 
