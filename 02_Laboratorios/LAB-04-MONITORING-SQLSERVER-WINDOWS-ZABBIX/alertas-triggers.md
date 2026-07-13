@@ -14,6 +14,16 @@ Documentar los triggers personalizados creados en Zabbix para supervisar SQL Ser
 | Triggers custom | 8 |
 | Validación | zabbix_get, Latest data y Problems |
 
+## Política de backup monitorizada
+
+| Tipo | Frecuencia operativa | Umbral de alerta |
+|---|---:|---:|
+| FULL | Diario | Más de 26 horas |
+| DIFF | Cada 6 horas | Sin trigger dedicado en v1 |
+| LOG | Cada 15 minutos | Más de 1 hora |
+
+Los umbrales permiten un pequeño margen de operación y detectan la pérdida de ejecuciones sucesivas.
+
 ## Triggers creados
 
 | Nº | Trigger | Severidad | Objetivo |
@@ -24,8 +34,8 @@ Documentar los triggers personalizados creados en Zabbix para supervisar SQL Ser
 | 4 | Always On unhealthy | High | Detectar estado no saludable de Always On. |
 | 5 | SQL blocking sessions detected | Warning | Detectar bloqueos activos. |
 | 6 | SQL Agent failed jobs detected | Average | Detectar jobs fallidos en las últimas 24 horas. |
-| 7 | SQL FULL backup old for OrionLabDB | Average | Detectar backup FULL antiguo en el primario. |
-| 8 | SQL LOG backup old for OrionLabDB | Average | Detectar backup LOG antiguo en el primario. |
+| 7 | SQL FULL backup old for OrionLabDB | Average | Detectar un FULL con más de 26 horas en el primario. |
+| 8 | SQL LOG backup old for OrionLabDB | Average | Detectar un LOG con más de 1 hora en el primario. |
 
 ## Diseño primary-only
 
@@ -91,4 +101,4 @@ Decisión:
 
 ## Conclusión
 
-Los triggers demuestran monitorización operativa útil: detectan un problema real, respetan el rol de Always On y validan recuperación tras una acción DBA concreta.
+Los triggers demuestran monitorización operativa útil: detectan un problema real, respetan el rol de Always On, aplican umbrales coherentes con la política de backup y validan recuperación tras una acción DBA concreta.
