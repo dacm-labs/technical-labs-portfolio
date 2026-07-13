@@ -1,0 +1,28 @@
+# Sistema operativo
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Editores y temporales
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+~$*
+.vscode/
+.idea/
+
+# Configuración local y secretos
+.env
+*.env
+*.local
+*.secret
+*.secrets
+
+# Logs y salidas locales
+*.log
+
+# Copias locales de portadas y exportaciones temporales
+*cover2.png
+*cover2.jpg
