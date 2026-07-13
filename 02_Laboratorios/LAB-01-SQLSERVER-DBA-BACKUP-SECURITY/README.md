@@ -4,6 +4,7 @@
 ![Tipo](https://img.shields.io/badge/tipo-laboratorio-orange)
 ![Área](https://img.shields.io/badge/área-SQL%20Server%20%7C%20DBA%20%7C%20Seguridad%20%7C%20Monitorización-blueviolet)
 ![Stack](https://img.shields.io/badge/stack-SQL%20Server%202025%20%7C%20Windows%20Server-lightgrey)
+![Documentación](https://img.shields.io/badge/documentación-markdown-lightgrey)
 
 ![Portada LAB-01 SQL Server DBA](diagramas/lab01_cover.png)
 
@@ -17,7 +18,7 @@ El laboratorio construye una base SQL Server formada por controlador de dominio,
 
 ## Objetivos
 
-- Desplegar SQL Server 2025 Enterprise Developer integrado con Active Directory.
+- Desplegar SQL Server 2025 Developer Edition integrado con Active Directory.
 - Separar roles de infraestructura: dominio, servidor SQL y estación DBA.
 - Configurar almacenamiento para datos, logs, backups, TempDB y auditoría.
 - Implementar backups FULL, DIFF y LOG.
