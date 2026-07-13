@@ -1,9 +1,10 @@
 # LAB-03 — SQL Server Hardening, Audit & Compliance
 
-![Estado](https://img.shields.io/badge/estado-completado-success)
+![Estado](https://img.shields.io/badge/estado-completado%20v1-brightgreen)
 ![Tipo](https://img.shields.io/badge/tipo-laboratorio-orange)
 ![Área](https://img.shields.io/badge/área-SQL%20Server%20%7C%20Security%20%7C%20Audit-blueviolet)
 ![Stack](https://img.shields.io/badge/stack-SQL%20Server%202025%20%7C%20Always%20On%20%7C%20AD-lightgrey)
+![Documentación](https://img.shields.io/badge/documentación-markdown-lightgrey)
 
 ![LAB-03 — SQL Server Hardening, Audit & Compliance](diagramas/lab03_cover.png)
 
